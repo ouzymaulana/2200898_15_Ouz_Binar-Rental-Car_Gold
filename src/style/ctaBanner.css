@@ -1,54 +1,50 @@
 .cta-banner {
-  background-color: #0d28a6;
-  border-radius: 13px;
-  border: none;
-  height: 326px;
+  background-color: #0d28a6 !important;
+  border-radius: 13px !important;
+  margin-top: 100px;
   margin-left: 136px;
   margin-right: 136px;
-  margin-top: 100px;
-  font-weight: 700;
-  padding-top: 64px;
+  padding: 64px 270px;
 }
 
-.card-title {
-  font-size: 36px;
+.card-title-cta-banner {
+  font-size: 36px !important;
   font-style: normal;
+  margin-bottom: 16px !important;
 }
 
-.description {
-  width: 468px;
+.card-text-cta-banner {
+  font-size: 14px;
   text-align: center;
+  line-height: 20px;
+  margin-bottom: 32px !important;
+  width: 468px;
 }
 
-button {
-  color: white;
-  border: yellow;
-  margin-top: 52px;
-  border-radius: 2px;
-  padding: 8px 12px;
-  background-color: #5cb85f;
+.button-mulai-sewa-mobil {
+  border-radius: 2px !important;
+  padding: 8px 12px !important;
+  background-color: #5cb85f !important;
+  font-weight: 700 !important;
 }
 
 @media (max-width: 360px) {
   .cta-banner {
-    width: 212px;
-    padding-top: 64px;
-    padding-bottom: 64px;
+    margin-left: 16px;
+    margin-right: 16px;
+    padding: 64px 58px;
+    margin-top: 60px;
   }
 
-  .title {
-    font-size: 36px;
-    font-style: normal;
-    display: flex;
-    justify-content: center;
+  .card-title-cta-banner {
+    font-size: 24px !important;
   }
 
-  .title p {
-    align-items: center;
-  }
-
-  .description {
-    width: 468px;
+  .card-text-cta-banner {
+    font-size: 14px;
     text-align: center;
+    line-height: 20px;
+    margin-bottom: 52px;
+    width: fit-content;
   }
 }

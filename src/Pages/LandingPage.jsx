@@ -1,4 +1,6 @@
 import CtaBanner from "../Components/CtaBanner";
+import Faq from "../Components/Faq";
+import Footer from "../Components/Footer";
 import Header from "../Components/Header";
 import OurService from "../Components/OurService";
 import WhyUs from "../Components/WhyUs";
@@ -10,6 +12,8 @@ export default function LandingPage() {
       <OurService />
       <WhyUs />
       <CtaBanner />
+      <Faq />
+      <Footer />
     </>
   );
 }

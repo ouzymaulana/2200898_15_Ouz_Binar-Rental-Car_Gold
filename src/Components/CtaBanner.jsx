@@ -3,24 +3,18 @@ import "./../style/ctaBanner.css";
 
 const CtaBanner = () => {
   return (
-    // <Row className="cta-banner flex-column justify-content-center align-items-center text-white">
-    //   <Col className="title">
-    //     <p>Sewa Mobil di (Lokasimu) Sekarang</p>
-    //   </Col>
-    //   <Col className="description">
-    //     Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel quae
-    //     recusandae impedit non sunt unde fugiat ab, voluptates dolor maiores
-    //     excepturi minima nulla quisquam! Aliquid enim error sapiente odit eum.
-    //   </Col>
-    //   <Button>Mulai Sewa Mobil</Button>
-    // </Row>
-    <Card className="cta-banner justify-content-center align-items-center">
-      <Card.Body>
-        <Card.Title>Special title treatment</Card.Title>
-        <Card.Text>
-          With supporting text below as a natural lead-in to additional content.
+    <Card className="cta-banner border-0 text-white">
+      <Card.Body className="d-flex flex-column justify-content-center align-items-center">
+        <Card.Title className="card-title-cta-banner text-center">
+          Sewa Mobil di (Lokasimu) Sekarang
+        </Card.Title>
+        <Card.Text className="card-text-cta-banner">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </Card.Text>
-        <Button variant="primary">Go somewhere</Button>
+        <Button className="button-mulai-sewa-mobil border-0">
+          Mulai Sewa mobil
+        </Button>
       </Card.Body>
     </Card>
   );
