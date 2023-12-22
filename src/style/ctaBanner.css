@@ -1,0 +1,54 @@
+.cta-banner {
+  background-color: #0d28a6;
+  border-radius: 13px;
+  border: none;
+  height: 326px;
+  margin-left: 136px;
+  margin-right: 136px;
+  margin-top: 100px;
+  font-weight: 700;
+  padding-top: 64px;
+}
+
+.card-title {
+  font-size: 36px;
+  font-style: normal;
+}
+
+.description {
+  width: 468px;
+  text-align: center;
+}
+
+button {
+  color: white;
+  border: yellow;
+  margin-top: 52px;
+  border-radius: 2px;
+  padding: 8px 12px;
+  background-color: #5cb85f;
+}
+
+@media (max-width: 360px) {
+  .cta-banner {
+    width: 212px;
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+
+  .title {
+    font-size: 36px;
+    font-style: normal;
+    display: flex;
+    justify-content: center;
+  }
+
+  .title p {
+    align-items: center;
+  }
+
+  .description {
+    width: 468px;
+    text-align: center;
+  }
+}

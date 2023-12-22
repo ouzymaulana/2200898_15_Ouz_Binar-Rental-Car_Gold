@@ -1,0 +1,48 @@
+.our-service {
+  margin-right: 206px;
+  margin-left: 206px;
+  margin-top: 104px;
+  gap: 100px;
+  font-weight: 700;
+}
+
+.description-our-service {
+  margin-top: 36px;
+  width: 468px;
+}
+
+.description-our-service h6 {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 36px;
+  margin-bottom: 24px;
+}
+
+.description-our-service p {
+  line-height: 20px;
+  font-size: 14px;
+}
+
+.list-our-service {
+  font-size: 14px;
+}
+
+@media (max-width: 360px) {
+  .img-our-service {
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin-right: 38px;
+    margin-left: 38px;
+  }
+  .img-our-service img {
+    width: 252px;
+    height: 228px;
+  }
+  .our-service {
+    margin-right: 16px;
+    margin-left: 16px;
+    margin-top: 60px;
+    gap: 24px;
+  }
+}

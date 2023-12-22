@@ -1,0 +1,46 @@
+.why-us {
+  margin-left: 136px;
+  margin-right: 136px;
+  margin-top: 100px;
+  font-weight: 700;
+}
+
+.why-us-title p:first-child {
+  font-size: 24px;
+}
+.why-us-title p:last-child {
+  font-size: 14px;
+}
+
+.why-us-card {
+  padding: 24px !important;
+  height: 196px !important;
+  width: 268px !important;
+}
+
+.why-us-card .card-title {
+  font-size: 16px;
+  font-weight: 700;
+  font-family: Arial;
+}
+
+.why-us-card p {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.why-us-card img {
+  height: 32px;
+  width: 32px;
+}
+
+@media (max-width: 360px) {
+  .why-us {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+  .why-us-card {
+    width: 328px !important;
+    height: 176px !important;
+  }
+}
