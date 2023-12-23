@@ -29,6 +29,7 @@ const Faq = () => {
           className="select-form"
           aria-label="Default select example"
           size="lg"
+          // style={{ whiteSpace: 'pre-line' }}
         >
           <option>Berapa hari sebelumnya sabaiknya booking sewa mobil?</option>
           <option value="1">One</option>

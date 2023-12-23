@@ -15,7 +15,7 @@ const Header = () => {
         >
           <Offcanvas.Header closeButton>
             <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>
-              Offcanvas
+              BCR
             </Offcanvas.Title>
           </Offcanvas.Header>
           <Offcanvas.Body>

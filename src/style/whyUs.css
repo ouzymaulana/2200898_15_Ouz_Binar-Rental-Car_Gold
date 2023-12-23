@@ -38,9 +38,14 @@
   .why-us {
     margin-left: 16px;
     margin-right: 16px;
+    margin-top: 60px !important;
   }
   .why-us-card {
     width: 328px !important;
     height: 176px !important;
+  }
+
+  .why-us-title {
+    text-align: center;
   }
 }
