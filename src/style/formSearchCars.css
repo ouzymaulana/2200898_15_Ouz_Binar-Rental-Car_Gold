@@ -8,9 +8,26 @@
   padding: 24px !important;
 }
 
-/* .form-search-cars form {
-  margin-bottom: 0 !important;
-} */
-.formSelect {
-  padding-right: 56px !important;
+.form-select-status {
+  padding-right: 96px !important;
+}
+
+@media (max-width: 360px) {
+  .form-search-cars {
+    margin-left: 16px !important;
+    margin-right: 16px !important;
+  }
+  .form-search-cars form {
+    font-size: 14px;
+    flex-direction: column;
+  }
+
+  .form-search-cars form select,
+  .form-search-cars form input {
+    font-size: 14px;
+  }
+
+  .form-search-cars form button {
+    font-size: 14px;
+  }
 }

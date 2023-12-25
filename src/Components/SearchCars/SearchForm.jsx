@@ -11,10 +11,7 @@ const SearchForm = () => {
         </Form.Group>
         <Form.Group controlId="formGroupPassword">
           <Form.Label>Kategori</Form.Label>
-          <Form.Select
-            aria-label="Default select example"
-            className="formSelect"
-          >
+          <Form.Select aria-label="Default select example">
             <option>Masukkan Kapasitas Mobil</option>
             <option value="1">One</option>
             <option value="2">Two</option>
@@ -23,10 +20,7 @@ const SearchForm = () => {
         </Form.Group>
         <Form.Group controlId="formGroupPassword">
           <Form.Label>Harga</Form.Label>
-          <Form.Select
-            className="formSelect"
-            aria-label="Default select example"
-          >
+          <Form.Select aria-label="Default select example">
             <option>Masukkan Harga Sewa Perhari</option>
             <option value="1">One</option>
             <option value="2">Two</option>
@@ -36,7 +30,7 @@ const SearchForm = () => {
         <Form.Group controlId="formGroupPassword">
           <Form.Label>Status</Form.Label>
           <Form.Select
-            className="formSelect"
+            className="form-select-status"
             aria-label="Default select example"
           >
             <option>Disewa</option>
@@ -49,7 +43,7 @@ const SearchForm = () => {
           className="n d-flex justify-content-center align-items-end"
           controlId="formGroupPassword"
         >
-          <Button>Cari Mobil</Button>
+          <Button className="m w-100">Cari Mobil</Button>
         </Form.Group>
       </Form>
     </Row>
