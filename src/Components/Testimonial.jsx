@@ -5,6 +5,7 @@ import {
   Slide,
   Slider,
 } from "pure-react-carousel";
+import "./../style/testimonial.css";
 
 const Testimonial = () => {
   return (
@@ -13,10 +14,30 @@ const Testimonial = () => {
       naturalSlideHeight={125}
       totalSlides={3}
     >
-      <Slider>
-        <Slide index={0}>I am the first Slide.</Slide>
-        <Slide index={1}>I am the second Slide.</Slide>
-        <Slide index={2}>I am the third Slide.</Slide>
+      <Slider
+        style={{ display: "flex", flexDirection: "row", overflow: "hidden" }}
+      >
+        <Slide
+          index={0}
+          className="slide-item"
+          style={{ backgroundColor: "red" }}
+        >
+          I am the first Slide.
+        </Slide>
+        <Slide
+          index={1}
+          className="slide-item"
+          style={{ backgroundColor: "blue" }}
+        >
+          I am the second Slide.
+        </Slide>
+        <Slide
+          index={2}
+          className="slide-item"
+          style={{ backgroundColor: "purple" }}
+        >
+          I am the third Slide.
+        </Slide>
       </Slider>
       <ButtonBack>Back</ButtonBack>
       <ButtonNext>Next</ButtonNext>

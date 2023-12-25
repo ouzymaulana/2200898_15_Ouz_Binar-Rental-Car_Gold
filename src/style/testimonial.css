@@ -1,0 +1,10 @@
+.sliderAnimation___300FY {
+  display: flex;
+  gap: 32px;
+}
+
+.slide-item {
+  width: 619px !important;
+  height: 270px !important;
+  padding-bottom: 0 !important;
+}

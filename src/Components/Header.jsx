@@ -1,8 +1,11 @@
 import { Button, Col, Nav, Navbar, Offcanvas } from "react-bootstrap";
 import car from "./../assets/img/img_car.png";
 import "./../style/Header.css";
+import { useLocation } from "react-router-dom/cjs/react-router-dom";
 
 const Header = () => {
+  const { pathname } = useLocation();
+  console.log(pathname);
   return (
     <>
       <Navbar expand={"lg"} className="navbar fixed-top">
@@ -46,12 +49,14 @@ const Header = () => {
             terbaik dengan harga terjangkau. Selalu siap melayani kebutuhanmu
             untuk sewa mobil selama 24 jam.
           </p>
-          <Button
-            type="button"
-            className="borrow fw-bold btn text-white border-0"
-          >
-            Mulai Sewa Mobil
-          </Button>
+          {pathname !== "/search-cars" && (
+            <Button
+              type="button"
+              className="borrow fw-bold btn text-white border-0"
+            >
+              Mulai Sewa Mobil
+            </Button>
+          )}
         </Col>
         <Col className="carImage">
           <img src={car} alt="car" />
