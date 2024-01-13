@@ -5,7 +5,6 @@ import { useLocation } from "react-router-dom/cjs/react-router-dom";
 
 const Header = () => {
   const { pathname } = useLocation();
-  console.log(pathname);
   return (
     <>
       <Navbar expand={"lg"} className="navbar fixed-top">

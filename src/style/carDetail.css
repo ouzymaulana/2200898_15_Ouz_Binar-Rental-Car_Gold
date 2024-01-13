@@ -1,0 +1,42 @@
+.car-detail {
+  display: flex;
+  margin-left: 196px !important;
+  margin-right: 196px !important;
+  margin-top: 31px !important;
+  gap: 32px;
+  font-size: 14px;
+  /* font-weight: 700; */
+  /* line-height: 175%; */
+}
+
+.list-title {
+  font-weight: 700;
+}
+
+.list-item .list-title {
+  margin-bottom: 8px !important;
+}
+
+.list-item .list-about-package {
+  /* list-style-type: disc !important; */
+  padding-left: 1rem !important ;
+  font-weight: 700;
+  color: #8a8a8a;
+  line-height: 175%;
+}
+
+.card-car-detail {
+  width: 405px !important;
+  height: min-content !important;
+  font-weight: 700;
+}
+
+.card-car-detail img {
+  padding: 28px 68px;
+}
+
+.card-car-detail button {
+  font-weight: 700;
+  background-color: #5cb85f !important;
+  border: none;
+}
