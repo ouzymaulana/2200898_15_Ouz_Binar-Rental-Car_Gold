@@ -10,7 +10,7 @@ import menTestimonial from "../assets/img/testimonial_photo1.png";
 import womenTestimonial from "../assets/img/testimonial_photo2.png";
 import start from "../assets/img/Star 5.svg";
 
-export default function Testimonial() {
+const Testimonial = () => {
   const sliderRef = useRef(null);
 
   const data = [
@@ -145,4 +145,6 @@ export default function Testimonial() {
       </div>
     </div>
   );
-}
+};
+
+export default Testimonial;

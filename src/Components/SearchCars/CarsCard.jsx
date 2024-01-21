@@ -2,8 +2,9 @@ import { Card } from "react-bootstrap";
 import car from "../../assets/img/car-in-card.jpg";
 import style from "../../style/cards.module.css";
 import { Link } from "react-router-dom/cjs/react-router-dom";
+import { PropTypes } from "prop-types";
 
-export default function CarsCard({ carData }) {
+const CarsCard = ({ carData }) => {
   return (
     <Card style={{ width: "18rem" }} className={style.carCard}>
       <Card.Img
@@ -29,4 +30,15 @@ export default function CarsCard({ carData }) {
       </Card.Body>
     </Card>
   );
-}
+};
+
+CarsCard.propTypes = {
+  carData: PropTypes.shape({
+    image: PropTypes.string,
+    name: PropTypes.string,
+    price: PropTypes.number,
+    id: PropTypes.number,
+  }).isRequired,
+};
+
+export default CarsCard;
