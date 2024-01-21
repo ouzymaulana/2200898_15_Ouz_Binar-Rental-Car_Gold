@@ -1,45 +1,54 @@
 import { Button, Col, Nav, Navbar, Offcanvas } from "react-bootstrap";
 import car from "./../assets/img/img_car.png";
-import "./../style/Header.css";
-import { useLocation } from "react-router-dom/cjs/react-router-dom";
+import style from "./../style/Header.module.css";
+import { Link, useLocation } from "react-router-dom/cjs/react-router-dom";
 
 const Header = () => {
   const { pathname } = useLocation();
   return (
     <>
-      <Navbar expand={"lg"} className="navbar fixed-top">
-        <Navbar.Brand className="icon-app" href="#" />
+      <Navbar expand={"lg"} className={`${style.navbar} navbar fixed-top`}>
+        <Navbar.Brand className={style.iconApp} href="#" />
         <Navbar.Toggle aria-controls={`navbarOffcanvasLg`} />
         <Navbar.Offcanvas
-          id={`navbarOffcanvasLg`}
+          id={style.navbarOffcanvasLg}
           aria-labelledby={`offcanvasNavbarLabel-expand-lg`}
           placement="end"
         >
           <Offcanvas.Header closeButton>
-            <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>
+            <Offcanvas.Title
+              className={style.offcanvasTitle}
+              id={`offcanvasNavbarLabel-expand-lg`}
+            >
               BCR
             </Offcanvas.Title>
           </Offcanvas.Header>
-          <Offcanvas.Body>
+          <Offcanvas.Body className={style.offcanvasBody}>
             <Nav className="justify-content-end flex-grow-1 pe-3">
-              <Nav.Link href="#" className="active">
+              <Nav.Link
+                href="#ourService"
+                className={`active ${style.navLink}`}
+              >
                 Our Services
               </Nav.Link>
-              <Nav.Link href="#" className="active">
+              <Nav.Link href="#whyUs" className={`active ${style.navLink}`}>
                 Why Us
               </Nav.Link>
-              <Nav.Link href="#" className="active">
+              <Nav.Link
+                href="#testimonial"
+                className={`active ${style.navLink}`}
+              >
                 Testimonial
               </Nav.Link>
-              <Nav.Link href="#" className="active">
+              <Nav.Link href="#faq" className={`active ${style.navLink}`}>
                 FAQ
               </Nav.Link>
             </Nav>
           </Offcanvas.Body>
         </Navbar.Offcanvas>
       </Navbar>
-      <div className="heroSection flex-wrap">
-        <Col className="titleHeroSection fw-bold">
+      <div className={`${style.heroSection} flex-wrap`}>
+        <Col className={`${style.titleHeroSection} fw-bold`}>
           <h1 className="fw-bold lh-base">
             Sewa & Rental Mobil Terbaik di kawasan (Lokasimu)
           </h1>
@@ -49,15 +58,17 @@ const Header = () => {
             untuk sewa mobil selama 24 jam.
           </p>
           {pathname !== "/search-cars" && (
-            <Button
-              type="button"
-              className="borrow fw-bold btn text-white border-0"
-            >
-              Mulai Sewa Mobil
-            </Button>
+            <Link to={`/search-cars`}>
+              <Button
+                className={`${style.borrow} fw-bold btn text-white border-0`}
+                as="button"
+              >
+                Mulai Sewa Mobil
+              </Button>
+            </Link>
           )}
         </Col>
-        <Col className="carImage">
+        <Col className={style.carImage}>
           <img src={car} alt="car" />
         </Col>
       </div>

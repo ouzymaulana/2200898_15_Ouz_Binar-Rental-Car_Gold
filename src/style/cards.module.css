@@ -2,13 +2,13 @@
   margin: 40px 196px !important;
 }
 
-.car-card {
+.carCard {
   box-sizing: content-box !important;
   width: 310px !important;
   padding: 24px !important;
 }
 
-.cards .card-body {
+.cards .cardBody {
   padding: 0 !important;
   font-size: 14px;
   font-weight: 700;
@@ -16,16 +16,16 @@
   /* text-align: justify; */
 }
 
-.cards .card-body p:first-child {
+.cards .cardBody p:first-child {
   font-weight: 400 !important;
 }
 
-.cards .card-title {
+.cards .cardTitle {
   font-size: 16px;
   font-weight: 700;
 }
 
-.cards .card-body button {
+.cards .cardBody button {
   padding: 12px 0;
   font-size: 14px;
   font-weight: 700;
@@ -40,7 +40,7 @@
     flex-direction: column;
   }
 
-  .car-card {
+  .carCard {
     box-sizing: border-box !important;
     width: 100% !important;
     padding: 24px !important;

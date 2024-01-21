@@ -1,5 +1,5 @@
 import { Card, Col } from "react-bootstrap";
-import "./../style/whyUs.css";
+import style from "./../style/whyUs.module.css";
 import iconComplete from "./../assets/img/icon_complete.png";
 import iconPrice from "./../assets/img/icon_price.png";
 import icon24Hrs from "./../assets/img/icon_24hrs.png";
@@ -22,7 +22,8 @@ const WhyUs = () => {
     {
       icon: icon24Hrs,
       title: "24 Jam Layanan",
-      description: "Layanan pelanggan 24 jam siap membantu Anda kapan saja",
+      description:
+        "Siap melayani kebutuhan Anda selama 24 jam nonstop. Kami juga tersedia di akhir minggu",
     },
     {
       icon: iconProfessional,
@@ -33,16 +34,19 @@ const WhyUs = () => {
   ];
 
   return (
-    <div className="why-us">
-      <Col className="why-us-title">
+    <div className={style.whyUs} id="whyUs">
+      <Col className={style.whyUsTitle}>
         <p>Why Us?</p>
         <p>Mengapa Harus Pilih Binar Car Rental?</p>
       </Col>
       <Col className="d-flex flex-wrap justify-content-between gap-3">
         {data.map((item, i) => (
-          <Card className="why-us-card d-flex flex-column gap-3" key={i}>
+          <Card
+            className={`${style.whyUsCard} d-flex flex-column gap-3`}
+            key={i}
+          >
             <Card.Img src={item.icon} alt="icon_complete" />
-            <Card.Title className="mb-2">{item.title}</Card.Title>
+            <span className={`${style.cartTitle}`}>{item.title}</span>
             <Card.Text>{item.description}</Card.Text>
           </Card>
         ))}

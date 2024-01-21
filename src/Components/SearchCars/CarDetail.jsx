@@ -1,5 +1,5 @@
 import { Button, Card, Col } from "react-bootstrap";
-import "../../style/carDetail.css";
+import style from "../../style/carDetail.module.css";
 import carImage from "../../assets/img/car-in-card.jpg";
 import { BsPeople } from "react-icons/bs";
 import { useEffect, useState } from "react";
@@ -37,14 +37,14 @@ const CarDetail = () => {
   }, []);
 
   return (
-    <div className="car-detail">
+    <div className={style.carDetail}>
       <Card style={{ flex: 7 }}>
         <Card.Body style={{ padding: "24px" }}>
-          <Card.Text className="list-title">Tentang Paket</Card.Text>
+          <Card.Text className={style.listTitle}>Tentang Paket</Card.Text>
           <Col className="list-paket d-flex flex-column gap-3">
-            <Col className="list-item">
-              <Card.Text className="list-title">Include</Card.Text>
-              <ul className="list-about-package">
+            <Col className={style.listItem}>
+              <Card.Text className={style.listTitle}>Include</Card.Text>
+              <ul className={style.listAboutPackage}>
                 <li>Tidak termasuk biaya makan sopir Rp 75.000/hari</li>
                 <li>
                   Jika overtime lebih dari 12 jam akan ada tambahan biaya Rp
@@ -53,9 +53,9 @@ const CarDetail = () => {
                 <li>Tidak termasuk akomodasi penginapan</li>
               </ul>
             </Col>
-            <Col className="list-item">
-              <Card.Text className="list-title">Exclude</Card.Text>
-              <ul className="list-about-package">
+            <Col className={style.listItem}>
+              <Card.Text className={style.listTitle}>Exclude</Card.Text>
+              <ul className={style.listAboutPackage}>
                 <li>Tidak termasuk biaya makan sopir Rp 75.000/hari</li>
                 <li>
                   Jika overtime lebih dari 12 jam akan ada tambahan biaya Rp
@@ -64,11 +64,11 @@ const CarDetail = () => {
                 <li>Tidak termasuk akomodasi penginapan</li>
               </ul>
             </Col>
-            <Col className="list-item">
-              <Card.Text className="list-title">
+            <Col className={style.listItem}>
+              <Card.Text className={style.listTitle}>
                 Refund, Reschedule, Overtime
               </Card.Text>
-              <ul className="list-about-package">
+              <ul className={style.listAboutPackage}>
                 <li>Tidak termasuk biaya makan sopir Rp 75.000/hari</li>
                 <li>
                   Jika overtime lebih dari 12 jam akan ada tambahan biaya Rp
@@ -92,7 +92,7 @@ const CarDetail = () => {
           </Col>
         </Card.Body>
       </Card>
-      <Card className="card-car-detail">
+      <Card className={style.cardCarDetail}>
         <Card.Img variant="top" src={carItem.image || carImage} />
         <Card.Body style={{ padding: "24px" }}>
           <Col className="d-flex flex-column mb-5">
@@ -100,7 +100,7 @@ const CarDetail = () => {
               {carItem.name}
             </Card.Text>
             <Col
-              className="d d-flex align-items-center gap-2"
+              className="d-flex align-items-center gap-2"
               style={{ color: "#8A8A8A" }}
             >
               <BsPeople fontSize={16} /> 6 - 8 Orang

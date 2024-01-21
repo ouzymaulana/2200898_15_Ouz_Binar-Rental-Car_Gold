@@ -1,4 +1,4 @@
-.why-us {
+.whyUs {
   margin-left: 136px;
   margin-right: 136px;
   margin-top: 100px;
@@ -6,47 +6,53 @@
   margin-bottom: 100px;
 }
 
-.why-us-title p:first-child {
+.whyUsTitle {
+  margin-bottom: 40px;
+}
+
+.whyUsTitle p:first-child {
   font-size: 24px;
 }
-.why-us-title p:last-child {
+.whyUsTitle p:last-child {
   font-size: 14px;
 }
 
-.why-us-card {
+.whyUsCard {
   padding: 24px !important;
   height: 196px !important;
   width: 268px !important;
 }
 
-.why-us-card .card-title {
+.whyUsCard .cardTitle {
   font-size: 16px;
   font-weight: 700;
   font-family: Arial;
+  font-style: normal;
+  line-height: 24px;
 }
 
-.why-us-card p {
+.whyUsCard p {
   font-size: 14px;
   font-weight: 700;
 }
 
-.why-us-card img {
+.whyUsCard img {
   height: 32px;
   width: 32px;
 }
 
 @media (max-width: 360px) {
-  .why-us {
+  .whyUs {
     margin-left: 16px;
     margin-right: 16px;
     margin-top: 60px !important;
   }
-  .why-us-card {
+  .whyUsCard {
     width: 328px !important;
     height: 176px !important;
   }
 
-  .why-us-title {
+  .whyUsTitle {
     text-align: center;
   }
 }

@@ -1,4 +1,4 @@
-.navbar-expand-lg {
+.navbar {
   padding-left: 136px !important;
   padding-right: 136px !important;
   background-color: #f1f3ff;
@@ -33,6 +33,14 @@
   width: 468px;
 }
 
+.navLink {
+  color: #000 !important;
+  font-size: 14px !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: 20px !important;
+}
+
 .carImage {
   flex: 6;
 }
@@ -43,7 +51,7 @@
   background-color: #5cb85f !important;
 }
 
-.icon-app {
+.iconApp {
   background-color: #0d28a6;
   width: 100px;
   height: 34px;
@@ -54,20 +62,20 @@
     width: 180px !important;
   }
 
-  .offcanvas-title {
+  .offcanvasTitle {
     font-size: 14px !important;
     font-weight: 700 !important;
     line-height: 20px !important;
     font-family: Arial, Helvetica, sans-serif;
   }
 
-  .offcanvas-body {
+  .offcanvasBody {
     padding-top: 0 !important;
     font-size: 14px !important;
     font-family: Arial, Helvetica, sans-serif;
   }
 
-  .nav-item .nav-link a {
+  .navLink a {
     color: #000;
     font-size: 14px;
     font-style: normal;

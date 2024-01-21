@@ -1,0 +1,75 @@
+.testimonialTitle :first-child {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 20px;
+}
+.testimonialTitle :last-child {
+  font-size: 14px;
+  line-height: 20px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.tertimonialCardItem {
+  border: 10px solid white;
+}
+
+.tertimonialCardBody {
+  text-align: center;
+  flex-direction: row !important;
+  border-radius: 8px !important;
+  padding-left: 36px !important;
+  padding-right: 26px !important;
+  background-color: rgba(241, 243, 255, 1);
+  height: 250px !important;
+  overflow: hidden;
+  gap: 20px;
+}
+
+.messageTestimonial p {
+  text-align: start;
+  font-weight: 700 !important ;
+  font-size: 14px !important;
+  margin-bottom: 0px !important;
+}
+
+.messageTestimonial p:last-child {
+  font-weight: 400 !important;
+}
+
+.carouselButton {
+  cursor: pointer;
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 50px !important;
+  border: 1px solid #c4c4c4;
+}
+
+.carouselButton:hover {
+  background-color: #5cb85f;
+  border: 0;
+
+  .carouselIconButton {
+    color: white;
+  }
+}
+
+@media (max-width: 360px) {
+  .tertimonialCardBody {
+    height: 392px !important;
+    padding: 40px 32px !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 24px !important;
+  }
+
+  .tertimonialCardBody > img:first-child {
+    width: 80px !important;
+    height: 80px !important;
+  }
+
+  .star {
+    justify-content: center !important;
+    margin-bottom: 16px;
+  }
+}

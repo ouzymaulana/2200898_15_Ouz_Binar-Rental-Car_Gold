@@ -30,7 +30,7 @@
     gap: 0;
   }
 
-  .social-media {
+  .socialMedia {
     width: 224px;
   }
 
@@ -38,7 +38,7 @@
     width: 90px !important;
   }
 
-  .footer .footer-section:last-child {
+  .footer .footerSection:last-child {
     margin-top: 16px;
   }
 }

@@ -10,21 +10,21 @@
   padding-bottom: 18px !important;
 }
 
-.faq-title p:first-child {
+.faqTitle p:first-child {
   font-size: 24px;
 }
-.faq-title p:last-child {
+.faqTitle p:last-child {
   font-size: 14px;
 }
 
-.select-form {
+.selectForm .accordionTitle {
   font-size: 14px !important;
   font-weight: 700 !important;
 }
 
-.select-form option {
-  padding: 18px;
-}
+/* .selectForm option {
+    padding: 18px;
+  } */
 
 @media (max-width: 360px) {
   .faq {
@@ -34,21 +34,12 @@
     flex-direction: column;
   }
 
-  .faq-title {
+  .faqTitle {
     text-align: center;
     font-family: Arial;
     box-sizing: content-box !important;
   }
-  .faq-title p:first-child {
+  .faqTitle p:first-child {
     line-height: 36px;
-  }
-
-  .form-select-lg {
-    padding-top: 16px !important;
-    padding-bottom: 16px !important;
-  }
-
-  .select-form {
-    white-space: pre-line;
   }
 }
