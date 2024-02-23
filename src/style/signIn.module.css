@@ -15,4 +15,5 @@
 
 .sidebar {
   grid-area: sidebar;
+  position: relative;
 }
