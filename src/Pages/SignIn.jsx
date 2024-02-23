@@ -1,14 +1,14 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import SidePageRegistry from "../Components/SidePageRegistry";
-import style from "../style/signIn.module.css";
+// import SidePageRegistry from "../Components/SidePageRegistry";
+import styles from "../style/signIn.module.css";
 import Logo from "../assets/img/Logo.jpg";
 
 export default function SignIn() {
   return (
     <>
-      <div className={style.container}>
-        <div className={style.regist}>
+      <div className={styles.container}>
+        <div className={styles.regist}>
           <img src={Logo} alt="" />
           <h1>Welcome Back</h1>
           <Form>
@@ -38,8 +38,15 @@ export default function SignIn() {
           </p>
         </div>
 
-        <div className={style.sidebar}>
-          <SidePageRegistry />
+        <div className={styles.sidebar}>
+          <div style={{ position: "absolute", bottom: 0, right: 0 }}>
+            <div style={{ marginBottom: 49 }}>Binar Car Rental</div>
+            <img
+              src="/src/assets/img/LandingPageDesktop.jpg"
+              alt="signin-image"
+            />
+          </div>
+          {/* <SidePageRegistry /> */}
         </div>
       </div>
     </>
