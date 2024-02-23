@@ -1,7 +1,7 @@
 import { Button, Col, Nav, Navbar, Offcanvas } from "react-bootstrap";
 import car from "./../assets/img/img_car.png";
 import style from "./../style/Header.module.css";
-import { Link, useLocation } from "react-router-dom/cjs/react-router-dom";
+import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
 const Header = () => {
   const { pathname } = useLocation();
