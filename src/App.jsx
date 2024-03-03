@@ -1,7 +1,7 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import CarDetail from "./Pages/DetailCar";
 import LandingPage from "./Pages/LandingPage";
 import SearchCars from "./Pages/SearchCars";
-import CarDetail from "./Pages/DetailCar";
 import SignIn from "./Pages/SignIn";
 
 function App() {
