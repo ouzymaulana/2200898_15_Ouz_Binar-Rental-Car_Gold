@@ -1,13 +1,12 @@
-import { Button, Card, Col } from "react-bootstrap";
-import style from "../../style/carDetail.module.css";
-import carImage from "../../assets/img/car-in-card.jpg";
-import { BsPeople } from "react-icons/bs";
-import { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
-import React from "react";
+import { useEffect, useState } from "react";
+import { Button, Card, Col } from "react-bootstrap";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css"
+import "react-datepicker/dist/react-datepicker.css";
+import { BsPeople } from "react-icons/bs";
+import { useParams } from "react-router-dom";
+import carImage from "../../assets/img/car-in-card.jpg";
+import style from "../../style/carDetail.module.css";
 
 const CarDetail = () => {
   const [carItem, setCarItem] = useState([]);
@@ -37,6 +36,8 @@ const CarDetail = () => {
 
   useEffect(() => {
     getDetailCar();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [pilihTanggal, setPilihTanggal] = useState([null, null]);
@@ -124,8 +125,11 @@ const CarDetail = () => {
               fontSize: "12px",
               lineHeight: "18px",
             }}
-          >Tentukan lama sewa mobil (max. 7 hari)</Col>
-          <DatePicker className={style.cardCarDate}
+          >
+            Tentukan lama sewa mobil (max. 7 hari)
+          </Col>
+          <DatePicker
+            className={style.cardCarDate}
             selectsRange={true}
             startDate={startDate}
             endDate={endDate}
@@ -140,13 +144,15 @@ const CarDetail = () => {
                 fontWeight: "400",
                 lineHeight: "20px",
               }}
-            >Total</Card.Text>
+            >
+              Total
+            </Card.Text>
             <Card.Text>Rp {carItem.price}</Card.Text>
           </Col>
           <Button className="w-100">Lanjutkan Pembayaran</Button>
         </Card.Body>
       </Card>
-    </div >
+    </div>
   );
 };
 
