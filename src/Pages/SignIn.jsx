@@ -6,12 +6,14 @@ import styles from "../style/signIn.module.css";
 import Logo from "../assets/img/Logo.jpg";
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const baseURL = "https://api-car-rental.binaracademy.org/customer/auth/login";
+  const navigate = useNavigate();
 
   const onChangeEmail = (e) => {
     const value = e.target.value;
@@ -25,22 +27,23 @@ export default function SignIn() {
     setError("");
   };
 
-  const handleSubmit = () => {
-    const data = {
-      email: email,
-      password: password,
-    };
-    axios
-      .post(baseURL, data)
-      .then((result) => {
-        if (result) {
-          localStorage.setItem("token", result.data.access_token);
-          `/Dashboard`, { replace: true };
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error.message);
-      });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const data = {
+        email: email,
+        password: password,
+      };
+
+      const result = await axios.post(baseURL, data);
+      if (result) {
+        localStorage.setItem("token", result.data.access_token);
+        navigate(`/`);
+      }
+    } catch (error) {
+      console.error("error signing in", error);
+    }
   };
 
   return (
@@ -80,7 +83,7 @@ export default function SignIn() {
               controlId="formBasicCheckbox"
             ></Form.Group>
 
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" onClick={handleSubmit}>
               Sign In
             </Button>
           </Form>
@@ -89,7 +92,7 @@ export default function SignIn() {
           </p>
         </div>
 
-        <div className={styles.sidebar} onClick={handleSubmit}>
+        <div className={styles.sidebar}>
           <SidePageRegistry />
         </div>
       </div>
