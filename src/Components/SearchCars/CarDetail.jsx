@@ -5,6 +5,9 @@ import { BsPeople } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import React from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css"
 
 const CarDetail = () => {
   const [carItem, setCarItem] = useState([]);
@@ -35,6 +38,9 @@ const CarDetail = () => {
   useEffect(() => {
     getDetailCar();
   }, []);
+
+  const [pilihTanggal, setPilihTanggal] = useState([null, null]);
+  const [startDate, endDate] = pilihTanggal;
 
   return (
     <div className={style.carDetail}>
@@ -95,25 +101,52 @@ const CarDetail = () => {
       <Card className={style.cardCarDetail}>
         <Card.Img variant="top" src={carItem.image || carImage} />
         <Card.Body style={{ padding: "24px" }}>
-          <Col className="d-flex flex-column mb-5">
-            <Card.Text style={{ marginBottom: "0px" }}>
+          <Col className="d-flex flex-column">
+            <Card.Text style={{ marginBottom: "8px" }}>
               {carItem.name}
             </Card.Text>
             <Col
               className="d-flex align-items-center gap-2"
-              style={{ color: "#8A8A8A" }}
+              style={{
+                color: "#8A8A8A",
+                marginBottom: "18px",
+                fontSize: "10px",
+                lineHeight: "14px",
+              }}
             >
-              <BsPeople fontSize={16} /> 6 - 8 Orang
+              <BsPeople fontSize={14} /> 6 - 8 Orang
             </Col>
           </Col>
+          <Col
+            style={{
+              color: "#8A8A8A",
+              fontWeight: "300",
+              fontSize: "12px",
+              lineHeight: "18px",
+            }}
+          >Tentukan lama sewa mobil (max. 7 hari)</Col>
+          <DatePicker className={style.cardCarDate}
+            selectsRange={true}
+            startDate={startDate}
+            endDate={endDate}
+            dateFormat="dd MMMM yyyy"
+            onChange={(date) => setPilihTanggal(date)}
+          />
           <Col className="d-flex flex-row justify-content-between">
-            <Card.Text>Total</Card.Text>
-            <Card.Text>{carItem.price}</Card.Text>
+            <Card.Text
+              style={{
+                marginBottom: "24px",
+                fontSize: "14px",
+                fontWeight: "400",
+                lineHeight: "20px",
+              }}
+            >Total</Card.Text>
+            <Card.Text>Rp {carItem.price}</Card.Text>
           </Col>
-          <Button className="w-100">Go somewhere</Button>
+          <Button className="w-100">Lanjutkan Pembayaran</Button>
         </Card.Body>
       </Card>
-    </div>
+    </div >
   );
 };
 
