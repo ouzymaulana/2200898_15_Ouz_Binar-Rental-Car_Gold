@@ -3,7 +3,7 @@ import CarDetail from "./Pages/DetailCar";
 import LandingPage from "./Pages/LandingPage";
 import SearchCars from "./Pages/SearchCars";
 import SignIn from "./Pages/SignIn";
-
+import SignUp from "./Pages/SignUp";
 
 function App() {
   const router = createBrowserRouter([
@@ -22,6 +22,10 @@ function App() {
     {
       path: "sign-in",
       element: <SignIn />,
+    },
+    {
+      path: "sign-up",
+      element: <SignUp />,
     },
   ]);
   return <RouterProvider router={router} />;
