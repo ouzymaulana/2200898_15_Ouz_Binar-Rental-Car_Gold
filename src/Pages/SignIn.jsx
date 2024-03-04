@@ -6,7 +6,7 @@ import styles from "../style/signIn.module.css";
 import Logo from "../assets/img/Logo.jpg";
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
@@ -42,7 +42,7 @@ export default function SignIn() {
         navigate(`/`);
       }
     } catch (error) {
-      console.error("error signing in", error);
+      setError("Masukkan email dan password yang benar", error);
     }
   };
 
@@ -53,9 +53,14 @@ export default function SignIn() {
           <img src={Logo} alt="" />
           <h1>Welcome Back</h1>
 
-          <Alert key="danger" variant="danger">
-            <p>{error}</p>
-          </Alert>
+          <div>
+            {error && (
+              <Alert className={styles.alert} variant="danger">
+                <p>{error}</p>
+              </Alert>
+            )}
+          </div>
+
           <Form>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email</Form.Label>
@@ -88,7 +93,8 @@ export default function SignIn() {
             </Button>
           </Form>
           <p>
-            Don&apos;t have an account? <a href="#">Sign Up for free</a>
+            Don&apos;t have an account?{" "}
+            <Link to="/sign-up">Sign up for free</Link>
           </p>
         </div>
 
