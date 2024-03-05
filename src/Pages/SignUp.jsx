@@ -7,6 +7,7 @@ import Logo from "../assets/img/Logo.jpg";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import CloseButton from "react-bootstrap/CloseButton";
 
 export default function SignUp() {
   const [name, setName] = useState("");
@@ -14,7 +15,10 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const passwordValidation = password.length >= 6;
+  const [passwordValidation, setPasswordValidation] = useState(
+    password.length >= 6
+  );
+  // const [hasSubmitted, setHasSubmitted] = useState(false);
   const baseURL =
     "https://api-car-rental.binaracademy.org/customer/auth/register";
   const navigate = useNavigate();
@@ -34,11 +38,19 @@ export default function SignUp() {
   const onChangePassword = (e) => {
     const value = e.target.value;
     setPassword(value);
+    setPasswordValidation(value.length >= 6);
+    // setHasSubmitted(false);
     setError("");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // setHasSubmitted(true); // Set submitted flag
+
+    if (password.length < 6) {
+      return;
+    }
 
     try {
       const data = {
@@ -60,6 +72,7 @@ export default function SignUp() {
 
   return (
     <>
+      <CloseButton className={style.close} />
       <div className={style.container}>
         <div className={style.regist}>
           <img src={Logo} alt="" />
@@ -118,18 +131,26 @@ export default function SignUp() {
                     : "2px solid red",
                 }}
               />
-              {!passwordValidation && (
-                <p style={{ color: "red" }}>
-                  Password must be at least 6 characters long.
-                </p>
+              {/* {!password && password.length === 0 && (
+                <p style={{ color: "red" }}>Please enter a password.</p>
               )}
+              {!passwordValidation && hasSubmitted} && (
+              <p style={{ color: "red" }}>
+                Password must be at least 6 characters long.
+              </p>
+              ) */}
             </Form.Group>
             <Form.Group
               className="mb-3"
               controlId="formBasicCheckbox"
             ></Form.Group>
 
-            <Button variant="primary" type="submit" onClick={handleSubmit}>
+            <Button
+              className={style.submit}
+              variant="primary"
+              type="submit"
+              onClick={handleSubmit}
+            >
               Sign Up
             </Button>
           </Form>
