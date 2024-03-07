@@ -1,6 +1,7 @@
 .container {
   display: grid;
   grid-template-areas: "regist sidebar";
+  grid-template-columns: 1fr 1fr;
   height: 100vh;
   margin: 0%;
 }
@@ -22,4 +23,70 @@
   font-family: Arial;
   width: 100%;
   height: 50px;
+}
+
+.close {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .banner {
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .container {
+    display: block;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .navbar {
+    display: flex;
+  }
+
+  .close {
+    display: block;
+    margin-top: 29px;
+    margin-right: 16px;
+  }
+
+  .logo {
+    margin-top: 29px;
+    margin-left: 16px;
+  }
+
+  .regist {
+    padding: 16px;
+  }
+
+  .suggestion {
+    font-family: Arial;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: left;
+    margin-top: 32px;
+  }
+
+  .title {
+    size: 24px;
+    font-weight: 700px;
+    margin-bottom: 32.07px;
+    margin-top: 32px;
+  }
+
+  .button {
+    margin-top: 31.93px;
+    padding-left: 140.5px;
+    padding-right: 140.5px;
+  }
 }
