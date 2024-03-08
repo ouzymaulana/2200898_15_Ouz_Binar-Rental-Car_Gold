@@ -1,7 +1,7 @@
 import { Card } from "react-bootstrap";
 import car from "../../assets/img/car-in-card.jpg";
 import style from "../../style/cards.module.css";
-import { Link } from "react-router-dom/cjs/react-router-dom";
+import { Link } from "react-router-dom";
 import { PropTypes } from "prop-types";
 
 const CarsCard = ({ carData }) => {

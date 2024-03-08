@@ -38,3 +38,11 @@
   background-color: #5cb85f !important;
   border: none;
 }
+
+.cardCarDate {
+  margin-top: 4px;
+  margin-bottom: 24px;
+  width: 339px;
+  height: 36px;
+  font-family: Arial;
+}
