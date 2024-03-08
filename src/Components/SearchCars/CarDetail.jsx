@@ -4,7 +4,7 @@ import { Button, Card, Col } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { BsPeople } from "react-icons/bs";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import carImage from "../../assets/img/car-in-card.jpg";
 import style from "../../style/carDetail.module.css";
 
@@ -40,8 +40,12 @@ const CarDetail = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const [pilihTanggal, setPilihTanggal] = useState([null, null]);
-  const [startDate, endDate] = pilihTanggal;
+  const [selectedDate, setSelectedDate] = useState([null, null]);
+  const [startDate, endDate] = selectedDate;
+
+  const currentDate = new Date();
+  const maxDate = new Date();
+  maxDate.setDate(currentDate.getDate() + 7);
 
   return (
     <div className={style.carDetail}>
@@ -120,6 +124,7 @@ const CarDetail = () => {
           </Col>
           <Col
             style={{
+              marginBottom: "4px",
               color: "#8A8A8A",
               fontWeight: "300",
               fontSize: "12px",
@@ -128,15 +133,27 @@ const CarDetail = () => {
           >
             Tentukan lama sewa mobil (max. 7 hari)
           </Col>
-          <DatePicker
-            className={style.cardCarDate}
-            selectsRange={true}
-            startDate={startDate}
-            endDate={endDate}
-            dateFormat="dd MMMM yyyy"
-            onChange={(date) => setPilihTanggal(date)}
-          />
-          <Col className="d-flex flex-row justify-content-between">
+
+          <div style={{ fontWeight: "400" }}>
+            <DatePicker
+              className={style.cardCarDate}
+              placeholderText="Pilih tanggal mulai dan tanggal akhir sewa"
+              selectsRange={true}
+              startDate={startDate}
+              endDate={endDate}
+              minDate={currentDate}
+              // maxDate={endDate}
+              // maxDate={maxDate}
+              dateFormat="dd MMM yyyy"
+              onChange={(date) => setSelectedDate(date)}
+              isClearable={true}
+            />
+          </div>
+
+          <Col
+            className="d-flex flex-row justify-content-between"
+            style={{ marginTop: "24px" }}
+          >
             <Card.Text
               style={{
                 marginBottom: "24px",
@@ -149,7 +166,9 @@ const CarDetail = () => {
             </Card.Text>
             <Card.Text>Rp {carItem.price}</Card.Text>
           </Col>
-          <Button className="w-100">Lanjutkan Pembayaran</Button>
+          <Link to={`/payment-cars/${carItem.id}`}>
+            <Button className={style.cardCarButton}>Pilih Mobil</Button>
+          </Link>
         </Card.Body>
       </Card>
     </div>

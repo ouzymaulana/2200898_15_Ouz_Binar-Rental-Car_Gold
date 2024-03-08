@@ -9,6 +9,7 @@ import { useLocation, useParams } from "react-router-dom";
 const SearchForm = () => {
   const { pathname } = useLocation();
   const { id } = useParams();
+
   const [formData, setFormData] = useState({
     namaMobil: "",
     kategori: "",
