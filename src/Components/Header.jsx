@@ -1,7 +1,7 @@
 import { Button, Col, Nav, Navbar, Offcanvas } from "react-bootstrap";
 import car from "./../assets/img/img_car.png";
 import style from "./../style/Header.module.css";
-import { Link, useLocation } from "react-router-dom/cjs/react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Header = () => {
   const { pathname } = useLocation();
@@ -24,7 +24,7 @@ const Header = () => {
             </Offcanvas.Title>
           </Offcanvas.Header>
           <Offcanvas.Body className={style.offcanvasBody}>
-            <Nav className="justify-content-end flex-grow-1 pe-3">
+            <Nav className="justify-content-end flex-grow-1 align-items-center pe-3">
               <Nav.Link
                 href="#ourService"
                 className={`active ${style.navLink}`}
@@ -42,6 +42,20 @@ const Header = () => {
               </Nav.Link>
               <Nav.Link href="#faq" className={`active ${style.navLink}`}>
                 FAQ
+              </Nav.Link>
+              <Nav.Link
+                href="#"
+                style={{
+                  marginLeft: "16px",
+                  padding: "8px 12px",
+                  color: "#FFF",
+                  backgroundColor: "#5CB85F",
+                  borderRadius: "2px",
+                  fontSize: "14px",
+                  lineHeight: "20px",
+                }}
+              >
+                Register
               </Nav.Link>
             </Nav>
           </Offcanvas.Body>
