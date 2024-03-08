@@ -4,7 +4,7 @@ import { Button, Card, Col } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { BsPeople } from "react-icons/bs";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import carImage from "../../assets/img/car-in-card.jpg";
 import style from "../../style/carDetail.module.css";
 
