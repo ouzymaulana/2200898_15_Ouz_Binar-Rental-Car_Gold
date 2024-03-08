@@ -1,7 +1,8 @@
 import Header from "../Components/Header";
 import SearchForm from "../Components/SearchCars/SearchForm";
 import Footer from "../Components/Footer";
-import CarDetail from "../Components/SearchCars/carDetail";
+// import CarDetail from "../Components/SearchCars/carDetail";
+import CarDetail from "../Components/SearchCars/CarDetail";
 
 const DetailCar = () => {
   return (
