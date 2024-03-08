@@ -33,16 +33,19 @@
   padding: 28px 68px;
 }
 
-.cardCarDetail button {
+.cardCarButton {
   font-weight: 700;
+  width: 358px;
   background-color: #5cb85f !important;
-  border: none;
+  border: none !important;
+  border-radius: 2px !important ;
 }
 
 .cardCarDate {
-  margin-top: 4px;
-  margin-bottom: 24px;
   width: 339px;
   height: 36px;
   font-family: Arial;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
 }

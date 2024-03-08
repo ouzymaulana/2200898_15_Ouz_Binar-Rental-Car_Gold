@@ -1,0 +1,80 @@
+.cardsContainer {
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.15);
+  padding: 24px;
+}
+
+.cardsPayment {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.cardsTitle {
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.cardsLabelContainer {
+  width: 240.25px;
+}
+
+.cardsLabel {
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.cardsLabelValue {
+  color: #8a8a8a;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.cardsText {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  display: flex;
+  flex-direction: row;
+}
+
+.cardsText :last-child {
+  margin-left: auto;
+}
+
+.cardsTextContainer {
+  width: 61px;
+  padding: 6px 0;
+  margin: 0 34px 0 0;
+  border: 1px solid #b29a9a;
+  text-align: center;
+}
+
+.cardsTextButton {
+  background-color: transparent !important;
+  color: black !important;
+  padding: 0 !important;
+  border: none !important;
+}
+
+.cardsDetailText {
+  margin-bottom: 8px;
+}
+
+.cardsDetailButton {
+  margin: 16px 0 24px;
+  background-color: #5cb85f !important;
+  border: none !important;
+}
+
+.cardsTimer {
+  font-size: 18px;
+  background-color: #fa2c5a;
+  color: #fff;
+  width: 87px;
+  display: flex;
+  justify-content: center;
+}
