@@ -1,12 +1,13 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
+import CloseButton from "react-bootstrap/CloseButton";
 import SidePageRegistry from "../Components/SidePageRegistry";
 import styles from "../style/signIn.module.css";
 import Logo from "../assets/img/Logo.jpg";
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
@@ -14,6 +15,7 @@ export default function SignIn() {
   const [error, setError] = useState("");
   const baseURL = "https://api-car-rental.binaracademy.org/customer/auth/login";
   const navigate = useNavigate();
+  const location = useLocation();
 
   const onChangeEmail = (e) => {
     const value = e.target.value;
@@ -25,6 +27,10 @@ export default function SignIn() {
     const value = e.target.value;
     setPassword(value);
     setError("");
+  };
+
+  const handleClose = () => {
+    navigate(location.state?.from || "/");
   };
 
   const handleSubmit = async (e) => {
@@ -42,21 +48,29 @@ export default function SignIn() {
         navigate(`/`);
       }
     } catch (error) {
-      console.error("error signing in", error);
+      setError("Masukkan email dan password yang benar", error);
     }
   };
 
   return (
     <>
       <div className={styles.container}>
+        <div className="navbar">
+          <img className={styles.logo} src={Logo} alt="" />
+          <CloseButton className={styles.close} onClick={handleClose} />
+        </div>
         <div className={styles.regist}>
-          <img src={Logo} alt="" />
-          <h1>Welcome Back</h1>
+          <h1 className={styles.title}>Welcome Back!</h1>
 
-          <Alert key="danger" variant="danger">
-            <p>{error}</p>
-          </Alert>
-          <Form>
+          <div>
+            {error && (
+              <Alert className={styles.alert} variant="danger">
+                <p>{error}</p>
+              </Alert>
+            )}
+          </div>
+
+          <Form className={styles.form}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email</Form.Label>
               <Form.Control
@@ -83,12 +97,18 @@ export default function SignIn() {
               controlId="formBasicCheckbox"
             ></Form.Group>
 
-            <Button variant="primary" type="submit" onClick={handleSubmit}>
+            <Button
+              className={styles.button}
+              variant="primary"
+              type="submit"
+              onClick={handleSubmit}
+            >
               Sign In
             </Button>
           </Form>
-          <p>
-            Don&apos;t have an account? <a href="#">Sign Up for free</a>
+          <p className={styles.suggestion}>
+            Don&apos;t have an account?{" "}
+            <Link to="/sign-up">Sign up for free</Link>
           </p>
         </div>
 
