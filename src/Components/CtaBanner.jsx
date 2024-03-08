@@ -1,6 +1,6 @@
 import { Button, Card } from "react-bootstrap";
 import style from "./../style/ctaBanner.module.css";
-import { Link } from "react-router-dom/cjs/react-router-dom";
+import { Link } from "react-router-dom";
 
 const CtaBanner = () => {
   return (

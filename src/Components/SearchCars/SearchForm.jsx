@@ -4,11 +4,12 @@ import style from "../../style/cards.module.css";
 import CarsCard from "./CarsCard";
 import { useState } from "react";
 import axios from "axios";
-import { useLocation, useParams } from "react-router-dom/cjs/react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 const SearchForm = () => {
   const { pathname } = useLocation();
   const { id } = useParams();
+
   const [formData, setFormData] = useState({
     namaMobil: "",
     kategori: "",
