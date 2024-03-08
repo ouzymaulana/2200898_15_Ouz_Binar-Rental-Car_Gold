@@ -37,6 +37,7 @@ const ToggleGroup = () => {
   );
 };
 
+// eslint-disable-next-line react/prop-types
 const Timer = ({ duration }) => {
   const [time, setTime] = useState(duration);
   useEffect(() => {
