@@ -1,13 +1,12 @@
-import { Button, Card, Col } from "react-bootstrap";
-import style from "../../style/carDetail.module.css";
-import carImage from "../../assets/img/car-in-card.jpg";
-import { BsPeople } from "react-icons/bs";
-import { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams, Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Button, Card, Col } from "react-bootstrap";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker-style.css";
-import moment from "moment";
+import "react-datepicker/dist/react-datepicker.css";
+import { BsPeople } from "react-icons/bs";
+import { useParams } from "react-router-dom";
+import carImage from "../../assets/img/car-in-card.jpg";
+import style from "../../style/carDetail.module.css";
 
 const CarDetail = () => {
   const [carItem, setCarItem] = useState([]);
@@ -37,6 +36,8 @@ const CarDetail = () => {
 
   useEffect(() => {
     getDetailCar();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [selectedDate, setSelectedDate] = useState([null, null]);

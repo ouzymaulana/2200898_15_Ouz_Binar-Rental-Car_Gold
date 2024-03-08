@@ -1,0 +1,17 @@
+.banner {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  height: 550px;
+  width: 550px;
+}
+
+.title {
+  margin: 112px 176px 49px 115px;
+  color: #ffffff;
+  font-weight: 400;
+  font-family: "Rubik";
+  size: 48px;
+  line-height: 72px;
+  opacity: 70%;
+}

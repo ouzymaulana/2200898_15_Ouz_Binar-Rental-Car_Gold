@@ -1,20 +1,29 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import LandingPage from "./Pages/LandingPage";
 import SearchCars from "./Pages/SearchCars";
 import CarDetail from "./Pages/DetailCar";
-import PaymentCars from "./Pages/PaymentCars";
+import SignIn from "./Pages/SignIn";
 
 function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route exact path="/" element={<LandingPage />} />
-        <Route exact path="/search-cars" element={<SearchCars />} />
-        <Route exact path="/search-cars/detail/:id" element={<CarDetail />} />
-        <Route exact path="/payment-cars/:id" element={<PaymentCars />} />
-      </Routes>
-    </Router>
-  );
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <LandingPage />,
+    },
+    {
+      path: "search-cars",
+      element: <SearchCars />,
+    },
+    {
+      path: "search-cars/detail/:id",
+      element: <CarDetail />,
+    },
+    {
+      path: "sign-in",
+      element: <SignIn />,
+    },
+  ]);
+  return <RouterProvider router={router} />;
 }
 
 export default App;
