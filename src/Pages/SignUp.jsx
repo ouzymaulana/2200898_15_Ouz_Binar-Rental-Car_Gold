@@ -1,7 +1,7 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
-import SidePageRegistry from "../components/SidePageRegistry";
+import SidePageRegistry from "../Components/SidePageRegistry";
 import style from "../style/signUp.module.css";
 import Logo from "../assets/img/Logo.jpg";
 import { useState } from "react";
