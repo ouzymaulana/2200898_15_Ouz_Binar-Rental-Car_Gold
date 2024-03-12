@@ -55,11 +55,12 @@ export default function SignIn() {
   return (
     <>
       <div className={styles.container}>
-        <div className="navbar">
+        <div className={styles.navbar}>
           <img className={styles.logo} src={Logo} alt="" />
           <CloseButton className={styles.close} onClick={handleClose} />
         </div>
         <div className={styles.regist}>
+          <img className={styles.logoDesktop} src={Logo} alt="" />
           <h1 className={styles.title}>Welcome Back!</h1>
 
           <div>

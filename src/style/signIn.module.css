@@ -8,13 +8,23 @@
 
 .regist {
   grid-area: regist;
-  padding: 200px 100px 0 100px;
+  padding: 150px 175px 90px 175px;
   text-align: left;
 }
 
 .sidebar {
   grid-area: sidebar;
   background-color: blue;
+}
+
+.navbar {
+  display: none;
+}
+
+.title {
+  margin-top: 32px;
+  margin-bottom: 32px;
+  size: 24px;
 }
 
 .alert {
@@ -27,6 +37,13 @@
 
 .close {
   display: none;
+}
+
+.button {
+  padding: 8px 171px 8px 171px !important;
+  background-color: #0d28a6 !important;
+  margin-top: 31.75px;
+  margin-bottom: 32px;
 }
 
 @media screen and (max-width: 768px) {
@@ -56,11 +73,16 @@
     display: block;
     margin-top: 29px;
     margin-right: 16px;
+    margin-left: 200px;
   }
 
   .logo {
     margin-top: 29px;
     margin-left: 16px;
+  }
+
+  .logoDesktop {
+    display: none;
   }
 
   .regist {
@@ -74,7 +96,6 @@
     line-height: 20px;
     letter-spacing: 0em;
     text-align: left;
-    margin-top: 32px;
   }
 
   .title {
@@ -85,8 +106,11 @@
   }
 
   .button {
-    margin-top: 31.93px;
-    padding-left: 140.5px;
-    padding-right: 140.5px;
+    padding: 8px 138px 8px 138px !important;
+    margin-top: 20px;
+    margin-bottom: 32px;
+    size: 14px;
+    line-height: 20px;
+    font-weight: 700px;
   }
 }
