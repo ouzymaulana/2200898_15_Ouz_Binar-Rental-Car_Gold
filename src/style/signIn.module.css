@@ -14,7 +14,7 @@
 
 .sidebar {
   grid-area: sidebar;
-  background-color: blue;
+  background-color: #0d28a6;
 }
 
 .navbar {
@@ -56,7 +56,7 @@
   }
 }
 
-@media screen and (max-width: 360px) {
+@media screen and (max-width: 425px) {
   .container {
     display: block;
   }
