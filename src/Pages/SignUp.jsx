@@ -43,6 +43,10 @@ export default function SignUp() {
     setError("");
   };
 
+  const handleClose = () => {
+    navigate(location.state?.from || "/");
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -72,11 +76,14 @@ export default function SignUp() {
 
   return (
     <>
-      <CloseButton className={style.close} />
       <div className={style.container}>
+        <div className={style.navbar}>
+          <img className={style.navbar} src={Logo} alt="" />
+          <CloseButton className={style.close} onClick={handleClose} />
+        </div>
         <div className={style.regist}>
-          <img src={Logo} alt="" />
-          <h1>Sign Up</h1>
+          <img className={style.logoDesktop} src={Logo} alt="" />
+          <h1 className={style.title}>Sign Up</h1>
 
           <div>
             {error && (
@@ -94,7 +101,7 @@ export default function SignUp() {
             )}
           </div>
 
-          <Form>
+          <Form className={style.form}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Nama*</Form.Label>
               <Form.Control
@@ -107,7 +114,7 @@ export default function SignUp() {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Email</Form.Label>
+              <Form.Label>Email*</Form.Label>
               <Form.Control
                 type="email"
                 placeholder="Contoh: johndee@gmail.com"
@@ -118,7 +125,7 @@ export default function SignUp() {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
+              <Form.Label>Create Password*</Form.Label>
               <Form.Control
                 type="password"
                 placeholder="6+ karakter"
@@ -146,7 +153,7 @@ export default function SignUp() {
             ></Form.Group>
 
             <Button
-              className={style.submit}
+              className={style.button}
               variant="primary"
               type="submit"
               onClick={handleSubmit}
@@ -154,7 +161,7 @@ export default function SignUp() {
               Sign Up
             </Button>
           </Form>
-          <p>
+          <p className={style.suggestion}>
             Already have an acoount? <Link to="/sign-in">Sign in here</Link>
           </p>
         </div>
