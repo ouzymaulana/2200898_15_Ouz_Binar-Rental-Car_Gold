@@ -75,7 +75,7 @@ export default function SignUp() {
       <CloseButton className={style.close} />
       <div className={style.container}>
         <div className={style.regist}>
-          <img src={Logo} alt="" />
+          <img src={Logo} alt="Binar Car Rental Logo" />
           <h1>Sign Up</h1>
 
           <div>

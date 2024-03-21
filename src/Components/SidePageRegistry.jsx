@@ -9,7 +9,11 @@ export default function SidePageRegistry() {
         <h1 className={style.title}>Binar Car Rental</h1>
 
         <div className={style.image}>
-          <img className={style.banner} src={LandingPageDesktop} alt="" />
+          <img
+            className={style.banner}
+            src={LandingPageDesktop}
+            alt="Preview of Binar Car Rental Homepage"
+          />
         </div>
       </div>
     </>
