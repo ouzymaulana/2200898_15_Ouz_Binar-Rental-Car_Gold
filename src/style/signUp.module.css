@@ -43,7 +43,7 @@
 .container {
   display: grid;
   grid-template-areas: "regist sidebar";
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   height: 100vh;
   margin: 0%;
 }
@@ -89,19 +89,11 @@
   margin-bottom: 32px;
 }
 
-@media screen and (max-width: 768px) {
-  .banner {
-    height: 100px;
-    width: 100px;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-  }
-}
-
 @media screen and (max-width: 425px) {
-  /* .container {
+  .container {
     display: block;
+    /* grid-template-columns: 1fr;
+    grid-template-areas: "regist"; */
   }
 
   .sidebar {
@@ -125,11 +117,13 @@
   }
 
   .logoDesktop {
-    display: none !important;
+    display: none;
   }
 
   .regist {
     padding: 16px;
+    grid-area: regist;
+    margin: 0;
   }
 
   .suggestion {
@@ -155,18 +149,5 @@
     size: 14px;
     line-height: 20px;
     font-weight: 700px;
-  } */
-
-  .container {
-    display: grid;
-    grid-template-columns: 1fr;
-  }
-
-  .sidebar {
-    display: none;
-  }
-
-  .navbar {
-    display: flex;
   }
 }

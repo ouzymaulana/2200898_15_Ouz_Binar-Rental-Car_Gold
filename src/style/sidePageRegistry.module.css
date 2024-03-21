@@ -1,17 +1,26 @@
 .banner {
-  position: absolute;
-  right: 0;
-  bottom: 0;
+  position: relative;
+  grid-area: image;
   height: 550px;
   width: 550px;
 }
 
 .title {
-  margin: 80px 176px 49px 215px;
   color: #ffffff;
   font-weight: 400;
   font-family: "Rubik";
   size: 48px;
   line-height: 72px;
   opacity: 70%;
+  grid-area: title;
+}
+
+.containers {
+  position: relative;
+  display: grid;
+  grid-template-areas:
+    "title"
+    "image";
+  right: 0;
+  bottom: 0;
 }

@@ -15,9 +15,7 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [passwordValidation, setPasswordValidation] = useState(
-    password.length >= 6
-  );
+  const [passwordValidation, setPasswordValidation] = useState(false);
   // const [hasSubmitted, setHasSubmitted] = useState(false);
   const baseURL =
     "https://api-car-rental.binaracademy.org/customer/auth/register";
@@ -52,9 +50,10 @@ export default function SignUp() {
 
     // setHasSubmitted(true); // Set submitted flag
 
-    if (password.length < 6) {
-      return;
-    }
+    // if (!validatePassword(password)) {
+    //   setError("Password must be at least 6 characters long.");
+    //   return;
+    // }
 
     try {
       const data = {
@@ -78,7 +77,7 @@ export default function SignUp() {
     <>
       <div className={style.container}>
         <div className={style.navbar}>
-          <img className={style.navbar} src={Logo} alt="" />
+          <img className={style.logo} src={Logo} alt="" />
           <CloseButton className={style.close} onClick={handleClose} />
         </div>
         <div className={style.regist}>
@@ -138,14 +137,11 @@ export default function SignUp() {
                     : "2px solid red",
                 }}
               />
-              {/* {!password && password.length === 0 && (
-                <p style={{ color: "red" }}>Please enter a password.</p>
+              {!passwordValidation && (
+                <p style={{ color: "red" }}>
+                  Password must be at least 6 characters long.
+                </p>
               )}
-              {!passwordValidation && hasSubmitted} && (
-              <p style={{ color: "red" }}>
-                Password must be at least 6 characters long.
-              </p>
-              ) */}
             </Form.Group>
             <Form.Group
               className="mb-3"
