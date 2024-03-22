@@ -3,6 +3,7 @@ import LandingPage from "./Pages/LandingPage";
 import SearchCars from "./Pages/SearchCars";
 import CarDetail from "./Pages/DetailCar";
 import SignIn from "./Pages/SignIn";
+import PaymentCars from "./Pages/PaymentCars";
 
 function App() {
   const router = createBrowserRouter([
@@ -21,6 +22,10 @@ function App() {
     {
       path: "sign-in",
       element: <SignIn />,
+    },
+    {
+      path: "payment-cars/:id",
+      element: <PaymentCars />,
     },
   ]);
   return <RouterProvider router={router} />;
