@@ -56,6 +56,7 @@ const Payment = () => {
   };
   useEffect(() => {
     getDetailCar();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const startDate = JSON.parse(localStorage.getItem("startDate"));
