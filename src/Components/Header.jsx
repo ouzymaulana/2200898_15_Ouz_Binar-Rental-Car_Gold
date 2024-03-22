@@ -1,9 +1,10 @@
 import { Button, Col, Nav, Navbar, Offcanvas } from "react-bootstrap";
 import car from "./../assets/img/img_car.png";
 import style from "./../style/Header.module.css";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
   const { pathname } = useLocation();
   return (
     <>
@@ -26,25 +27,26 @@ const Header = () => {
           <Offcanvas.Body className={style.offcanvasBody}>
             <Nav className="justify-content-end flex-grow-1 align-items-center pe-3">
               <Nav.Link
-                href="#ourService"
+                href="/#ourService"
                 className={`active ${style.navLink}`}
               >
                 Our Services
               </Nav.Link>
-              <Nav.Link href="#whyUs" className={`active ${style.navLink}`}>
+              <Nav.Link href="/#whyUs" className={`active ${style.navLink}`}>
                 Why Us
               </Nav.Link>
               <Nav.Link
-                href="#testimonial"
+                href="/#testimonial"
                 className={`active ${style.navLink}`}
               >
                 Testimonial
               </Nav.Link>
-              <Nav.Link href="#faq" className={`active ${style.navLink}`}>
+              <Nav.Link href="/#faq" className={`active ${style.navLink}`}>
                 FAQ
               </Nav.Link>
+
               <Nav.Link
-                href="#"
+                onClick={() => navigate("/sign-in")}
                 style={{
                   marginLeft: "16px",
                   padding: "8px 12px",
