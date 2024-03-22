@@ -4,38 +4,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import iconCheck from "./../assets/icon/fi_check.png";
-
-const ToggleGroup = () => {
-  const payments = {
-    data: [
-      { id: "1", bank: "BNI" },
-      { id: "2", bank: "BCA" },
-      { id: "3", bank: "Mandiri" },
-    ],
-  };
-  const [active, setActive] = useState(payments[0]);
-  console.log(payments);
-  return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
-      {payments.data.map((payment) => (
-        <>
-          <Button
-            active={active === payment}
-            onClick={() => setActive(payment)}
-            className={style.cardsTextButton}
-          >
-            <div className={style.cardsText}>
-              <div className={style.cardsTextContainer}>{payment.bank}</div>
-              <div style={{ margin: "6px 0" }}>{payment.bank} Transfer</div>
-              <img src={iconCheck} />
-            </div>
-          </Button>
-          <hr style={{ margin: "16px 0px" }} />
-        </>
-      ))}
-    </div>
-  );
-};
+import moment from "moment";
 
 // eslint-disable-next-line react/prop-types
 const Timer = ({ duration }) => {
@@ -47,13 +16,13 @@ const Timer = ({ duration }) => {
   }, [time]);
 
   const GetFormattedTime = (milliseconds) => {
-    let total_detik = parseInt(Math.floor(milliseconds / 1000));
-    let total_menit = parseInt(Math.floor(total_detik / 60));
-    let total_jam = parseInt(Math.floor(total_menit / 60));
+    const total_detik = parseInt(Math.floor(milliseconds / 1000));
+    const total_menit = parseInt(Math.floor(total_detik / 60));
+    const total_jam = parseInt(Math.floor(total_menit / 60));
 
-    let detik = parseInt(total_detik % 60);
-    let menit = parseInt(total_menit % 60);
-    let jam = parseInt(total_jam % 24);
+    const detik = parseInt(total_detik % 60);
+    const menit = parseInt(total_menit % 60);
+    const jam = parseInt(total_jam % 24);
 
     return `${jam}: ${menit}: ${detik}`;
   };
@@ -64,7 +33,6 @@ const Timer = ({ duration }) => {
 const Payment = () => {
   const [carItem, setCarItem] = useState([]);
   const { id } = useParams();
-
   const getDetailCar = async () => {
     const axiosConfig = {
       headers: {
@@ -86,10 +54,30 @@ const Payment = () => {
       console.error(error);
     }
   };
-
   useEffect(() => {
     getDetailCar();
   }, []);
+
+  const startDate = JSON.parse(localStorage.getItem("startDate"));
+  const startdate = moment(startDate).format("DD MMM YYYY");
+  const endDate = JSON.parse(localStorage.getItem("endDate"));
+  const enddate = moment(endDate).format("DD MMM YYYY");
+  const tomorrow = moment(enddate).add("1", "days").format("LLLL");
+  const rangeDate = localStorage.getItem("rangeDate");
+
+  const [checkBCA, setCheckBCA] = useState(false);
+  const [checkBNI, setCheckBNI] = useState(false);
+  const [checkMandiri, setCheckMandiri] = useState(false);
+  const [active, setActive] = useState([]);
+  console.log(active);
+
+  const handleButton = (buttonPayment) => {
+    setActive(active === buttonPayment ? "" : buttonPayment);
+    setCheckBCA(buttonPayment === "BCA" && !checkBCA);
+    setCheckBNI(buttonPayment === "BNI" && !checkBNI);
+    setCheckMandiri(buttonPayment === "Mandiri" && !checkMandiri);
+  };
+
   return (
     <>
       <Card>
@@ -114,31 +102,84 @@ const Payment = () => {
               <div className={style.cardsLabelContainer}>
                 {carItem.category}
               </div>
-              <div className={style.cardsLabelContainer}>{carItem.price}</div>
-              <div className={style.cardsLabelContainer}>Tanggal akhir</div>
+              <div className={style.cardsLabelContainer}>{startdate}</div>
+              <div className={style.cardsLabelContainer}>{enddate}</div>
             </div>
           </Col>
         </Card.Body>
 
         <Col style={{ display: "flex", gap: "32px" }}>
-          <Card.Body
-            className={style.cardsContainer}
-            style={{ marginLeft: "199px", width: "605px", height: "320px" }}
-          >
-            <Col className={style.cardsPayment}>
-              <div
-                className={style.cardsTitle}
-                style={{ marginBottom: "16px" }}
-              >
-                Pilih Bank Transfer
-              </div>
-              <div style={{ marginBottom: "44px" }}>
-                Kamu bisa membayar dengan transfer melalui ATM, Internet Banking
-                atau Mobile Banking
-              </div>
-              <ToggleGroup />
-            </Col>
-          </Card.Body>
+          <Col>
+            <Card.Body
+              className={style.cardsContainer}
+              style={{ marginLeft: "199px", width: "605px", height: "320px" }}
+            >
+              <Col className={style.cardsPayment}>
+                <div
+                  className={style.cardsTitle}
+                  style={{ marginBottom: "16px" }}
+                >
+                  Pilih Bank Transfer
+                </div>
+                <div style={{ marginBottom: "44px" }}>
+                  Kamu bisa membayar dengan transfer melalui ATM, Internet
+                  Banking atau Mobile Banking
+                </div>
+                <Col>
+                  <Col className={style.cardsText}>
+                    <Button
+                      className={`${style.cardsTextButton} ${
+                        active === "BCA" ? "active" : ""
+                      }`}
+                      onClick={() => handleButton("BCA")}
+                    >
+                      BCA
+                    </Button>
+                    <div style={{ margin: "6px 0" }}>BCA Transfer</div>
+                    {active === "BCA" && checkBCA && (
+                      <img src={iconCheck} alt="Check Icon" />
+                    )}
+                  </Col>
+
+                  <hr style={{ margin: "16px 0px" }} />
+
+                  <Col className={style.cardsText}>
+                    <Button
+                      className={`${style.cardsTextButton} ${
+                        active === "BNI" ? "active" : ""
+                      }`}
+                      onClick={() => handleButton("BNI")}
+                    >
+                      BNI
+                    </Button>
+                    <div style={{ margin: "6px 0" }}>BNI Transfer</div>
+                    {active === "BNI" && checkBNI && (
+                      <img src={iconCheck} alt="Check Icon" />
+                    )}
+                  </Col>
+
+                  <hr style={{ margin: "16px 0px" }} />
+
+                  <Col className={style.cardsText}>
+                    <Button
+                      className={`${style.cardsTextButton} ${
+                        active === "Mandiri" ? "active" : ""
+                      }`}
+                      onClick={() => handleButton("Mandiri")}
+                    >
+                      Mandiri
+                    </Button>
+                    <div style={{ margin: "6px 0" }}>Mandiri Transfer</div>
+                    {active === "Mandiri" && checkMandiri && (
+                      <img src={iconCheck} alt="Check Icon" />
+                    )}
+                  </Col>
+
+                  <hr style={{ margin: "16px 0px" }} />
+                </Col>
+              </Col>
+            </Card.Body>
+          </Col>
 
           <Card.Body
             className={style.cardsContainer}
@@ -153,15 +194,33 @@ const Payment = () => {
               >
                 <Card.Text className={style.cardsList}>Total</Card.Text>
                 <Card.Text className={style.cardsTitle}>
-                  Rp {carItem.price}
+                  {new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                  }).format(carItem.price * rangeDate)}
                 </Card.Text>
               </Col>
 
               <Col>
                 <div className={style.cardsTitle}>Harga</div>
-                <li className={style.cardsDetailText}>
-                  Sewa Mobil Rp. ...... x 7 Hari
-                </li>
+                <div
+                  className={`${style.cardsDetailText} d-flex flex-row justify-content-between`}
+                >
+                  <li>
+                    Sewa Mobil{" "}
+                    {new Intl.NumberFormat("id-ID", {
+                      style: "currency",
+                      currency: "IDR",
+                    }).format(carItem.price)}{" "}
+                    x {rangeDate} Hari
+                  </li>
+                  <div>
+                    {new Intl.NumberFormat("id-ID", {
+                      style: "currency",
+                      currency: "IDR",
+                    }).format(carItem.price * rangeDate)}
+                  </div>
+                </div>
               </Col>
 
               <Col>
@@ -190,10 +249,20 @@ const Payment = () => {
                 className={`${style.cardsTitle} d-flex flex-row justify-content-between`}
               >
                 <Card.Text>Total</Card.Text>
-                <Card.Text>Rp {carItem.price}</Card.Text>
+                <Card.Text>
+                  {new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                  }).format(carItem.price * rangeDate)}
+                </Card.Text>
               </Col>
 
-              <Button className={`${style.cardsDetailButton} w-100`}>
+              <Button
+                disabled={
+                  active !== "BCA" && active !== "BNI" && active !== "Mandiri"
+                }
+                className={`${style.cardsDetailButton} w-100`}
+              >
                 Bayar
               </Button>
             </Col>
@@ -203,45 +272,113 @@ const Payment = () => {
         <br></br>
 
         <Col style={{ display: "flex", gap: "32px" }}>
-          <Card.Body
-            className={style.cardsContainer}
-            style={{ marginLeft: "199px", width: "605px", height: "96px" }}
-          >
-            <Col
+          <Col style={{ display: "flex", flexDirection: "column" }}>
+            <Card.Body
+              className={style.cardsContainer}
               style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
+                marginLeft: "199px",
+                marginBottom: "24px",
+                width: "605px",
+                height: "96px",
               }}
             >
-              <div
-                className={style.cardsPayment}
-                style={{ width: "450px", marginRight: "20px" }}
+              <Col
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
               >
                 <div
-                  className={style.cardsTitle}
-                  style={{ marginBottom: "14.45px" }}
+                  className={style.cardsPayment}
+                  style={{ width: "450px", marginRight: "20px" }}
                 >
-                  Selesaikan Pembayaran Sebelum
+                  <div
+                    className={style.cardsTitle}
+                    style={{ marginBottom: "14.45px" }}
+                  >
+                    Selesaikan Pembayaran Sebelum
+                  </div>
+                  <div style={{ marginBottom: "17.05px" }}>{tomorrow}</div>
                 </div>
-                <div style={{ marginBottom: "17.05px" }}>
-                  .., ......... jam 13.00 WIB
+                <div className={style.cardsTimer}>
+                  <Timer duration={24 * 60 * 60 * 1000} />
                 </div>
-              </div>
-              <div className={style.cardsTimer}>
-                <Timer duration={24 * 60 * 60 * 1000} />
-              </div>
-            </Col>
-          </Card.Body>
+              </Col>
+            </Card.Body>
+
+            <Card.Body
+              className={style.cardsContainer}
+              style={{
+                marginLeft: "199px",
+                marginBottom: "24px",
+                width: "605px",
+                height: "278px",
+              }}
+            >
+              <Col>
+                <div
+                  className={style.cardsPayment}
+                  style={{ marginBottom: "16px" }}
+                >
+                  <div className={style.cardsTitle}>Lakukan Transfer Ke</div>
+                  <div style={{ display: "flex", gap: "16px" }}>
+                    <div>BCA</div>
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      <div>BCA Transfer</div>
+                      <div>a.n Binar Car Rental</div>
+                    </div>
+                  </div>
+                </div>
+              </Col>
+            </Card.Body>
+
+            <Card.Body
+              className={style.cardsContainer}
+              style={{
+                marginLeft: "199px",
+                marginBottom: "24px",
+                width: "605px",
+                height: "370px",
+              }}
+            >
+              <Col>
+                <div className={style.cardsPayment}>
+                  <div
+                    className={style.cardsTitle}
+                    style={{ marginBottom: "24px" }}
+                  >
+                    Instruksi Pembayaran
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "space-around",
+                    }}
+                  >
+                    <div>ATM BCA</div>
+                    <div>M-BCA</div>
+                    <div>BCA Klik</div>
+                    <div>Internet Banking</div>
+                  </div>
+                </div>
+              </Col>
+            </Card.Body>
+          </Col>
 
           <Card.Body
             className={style.cardsContainer}
             style={{
               marginRight: "199px",
               width: "405px",
+              height: "148px",
             }}
           >
-            <div style={{ marginBottom: "44px" }}>
+            <div
+              className={style.cardsPayment}
+              style={{ marginBottom: "44px" }}
+            >
               Klik konfirmasi pembayaran untuk mempercepat proses pengecekan
             </div>
             <Button className={`${style.cardsDetailButton} w-100`}>
