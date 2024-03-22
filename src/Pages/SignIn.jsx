@@ -55,11 +55,16 @@ export default function SignIn() {
   return (
     <>
       <div className={styles.container}>
-        <div className="navbar">
-          <img className={styles.logo} src={Logo} alt="" />
+        <div className={styles.navbar}>
+          <img className={styles.logo} src={Logo} alt="Binar Car Rental Logo" />
           <CloseButton className={styles.close} onClick={handleClose} />
         </div>
         <div className={styles.regist}>
+          <img
+            className={styles.logoDesktop}
+            src={Logo}
+            alt="Binar Car Rental Logo"
+          />
           <h1 className={styles.title}>Welcome Back!</h1>
 
           <div>
