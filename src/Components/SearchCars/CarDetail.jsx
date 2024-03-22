@@ -2,13 +2,14 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Button, Card, Col } from "react-bootstrap";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import "react-datepicker/dist/react-datepicker-style.css";
 import { BsPeople } from "react-icons/bs";
-import { useParams, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import carImage from "../../assets/img/car-in-card.jpg";
 import style from "../../style/carDetail.module.css";
 
 const CarDetail = () => {
+  const navigate = useNavigate();
   const [carItem, setCarItem] = useState([]);
   const { id } = useParams();
 
@@ -34,18 +35,74 @@ const CarDetail = () => {
     }
   };
 
-  useEffect(() => {
-    getDetailCar();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const redirectPage = () => {
+    const currentUrl = window.location.href;
+    localStorage.setItem("savedUrl", currentUrl);
+    console.log("Current URL saved to localStorage:", currentUrl);
+    if (!localStorage.getItem("token")) {
+      navigate("/sign-in");
+    } else {
+      navigate(`/payment-cars/${carItem.id}`);
+    }
+  };
 
   const [selectedDate, setSelectedDate] = useState([null, null]);
   const [startDate, endDate] = selectedDate;
+  const [, setRange] = useState(0);
 
-  const currentDate = new Date();
-  const maxDate = new Date();
-  maxDate.setDate(currentDate.getDate() + 7);
+  const calculateRange = (start, end) => {
+    const millisecondsInADay = 1000 * 60 * 60 * 24;
+    const daysDifference = Math.floor((end - start) / millisecondsInADay) + 1;
+    return daysDifference;
+  };
+
+  useEffect(() => {
+    if (startDate && endDate) {
+      const calculatedRange = calculateRange(startDate, endDate);
+      setRange(calculatedRange);
+      localStorage.setItem("rangeDate", calculatedRange);
+    }
+  }, [startDate, endDate]);
+
+  const handleRange = (dates) => {
+    setSelectedDate(dates);
+    const [start] = dates;
+    const maxRange = new Date(start);
+    if (!start) return;
+    maxRange.setDate(start.getDate() + 6);
+    setMaxRange(maxRange);
+  };
+
+  const setMaxRange = (maxRange) => {
+    setSelectedDate((prevDates) => {
+      const [start, end] = prevDates;
+      if (end > maxRange) {
+        return [start, maxRange];
+      }
+      return prevDates;
+    });
+  };
+
+  const filterDate = (date) => {
+    const [startDate] = selectedDate;
+    if (startDate) {
+      const filterRange = new Date(startDate);
+      filterRange.setDate(filterRange.getDate() + 6);
+      return startDate <= date && date <= filterRange;
+    }
+    return true;
+  };
+
+  useEffect(() => {
+    localStorage.setItem("startDate", JSON.stringify(startDate));
+  }, [startDate]);
+  useEffect(() => {
+    localStorage.setItem("endDate", JSON.stringify(endDate));
+  }, [endDate]);
+
+  useEffect(() => {
+    getDetailCar();
+  }, []);
 
   return (
     <div className={style.carDetail}>
@@ -134,21 +191,23 @@ const CarDetail = () => {
             Tentukan lama sewa mobil (max. 7 hari)
           </Col>
 
-          <div style={{ fontWeight: "400" }}>
+          <Col style={{ fontWeight: "400" }}>
             <DatePicker
               className={style.cardCarDate}
               placeholderText="Pilih tanggal mulai dan tanggal akhir sewa"
-              selectsRange={true}
-              startDate={startDate}
-              endDate={endDate}
-              minDate={currentDate}
-              // maxDate={endDate}
-              // maxDate={maxDate}
+              selectsRange
+              startDate={selectedDate[0]}
+              endDate={selectedDate[1]}
+              minDate={new Date()}
+              maxDate={selectedDate[1] ? selectedDate[1] : null}
+              value={selectedDate}
               dateFormat="dd MMM yyyy"
-              onChange={(date) => setSelectedDate(date)}
-              isClearable={true}
+              onChange={handleRange}
+              filterDate={filterDate}
+              isClearable
+              showMonthDropdown
             />
-          </div>
+          </Col>
 
           <Col
             className="d-flex flex-row justify-content-between"
@@ -164,11 +223,18 @@ const CarDetail = () => {
             >
               Total
             </Card.Text>
-            <Card.Text>Rp {carItem.price}</Card.Text>
+            <Card.Text>
+              {new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
+              }).format(carItem.price)}
+            </Card.Text>
           </Col>
-          <Link to={`/payment-cars/${carItem.id}`}>
-            <Button className={style.cardCarButton}>Pilih Mobil</Button>
-          </Link>
+          <Col>
+            <Button className={style.cardCarButton} onClick={redirectPage}>
+              Lanjutkan Pembayaran
+            </Button>
+          </Col>
         </Card.Body>
       </Card>
     </div>
