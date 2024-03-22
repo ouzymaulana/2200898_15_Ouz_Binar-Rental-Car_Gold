@@ -45,19 +45,18 @@
   margin-left: auto;
 }
 
-.cardsTextContainer {
-  width: 61px;
-  padding: 6px 0;
-  margin: 0 34px 0 0;
-  border: 1px solid #b29a9a;
-  text-align: center;
-}
-
 .cardsTextButton {
+  width: 61px;
   background-color: transparent !important;
   color: black !important;
+  margin: 0 34px 0 0 !important;
   padding: 0 !important;
-  border: none !important;
+  border: 1px solid #d0d0d0 !important;
+  border-radius: 4px !important;
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  line-height: 18px !important;
+  text-align: center;
 }
 
 .cardsDetailText {
