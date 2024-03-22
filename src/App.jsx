@@ -3,6 +3,7 @@ import CarDetail from "./Pages/DetailCar";
 import LandingPage from "./Pages/LandingPage";
 import SearchCars from "./Pages/SearchCars";
 import SignIn from "./Pages/SignIn";
+import PaymentCars from "./Pages/PaymentCars";
 import SignUp from "./Pages/SignUp";
 
 function App() {
@@ -22,6 +23,10 @@ function App() {
     {
       path: "sign-in",
       element: <SignIn />,
+    },
+    {
+      path: "payment-cars/:id",
+      element: <PaymentCars />,
     },
     {
       path: "sign-up",
