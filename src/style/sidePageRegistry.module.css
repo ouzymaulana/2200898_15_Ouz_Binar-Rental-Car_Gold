@@ -3,9 +3,13 @@
   grid-area: image;
   height: 550px;
   width: 550px;
+
+  right: 0;
+  bottom: 0;
 }
 
 .title {
+  display: grid;
   color: #ffffff;
   font-weight: 400;
   font-family: "Rubik";
@@ -13,6 +17,8 @@
   line-height: 72px;
   opacity: 70%;
   grid-area: title;
+  margin-top: 70px;
+  justify-self: left;
 }
 
 .containers {
@@ -21,6 +27,8 @@
   grid-template-areas:
     "title"
     "image";
-  right: 0;
-  bottom: 0;
+  justify-items: end;
+  align-items: end;
+  gap: 20px;
+  padding-left: 220px;
 }

@@ -15,7 +15,7 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [passwordValidation, setPasswordValidation] = useState(false);
+  // const [passwordValidation, setPasswordValidation] = useState(false);
   // const [hasSubmitted, setHasSubmitted] = useState(false);
   const baseURL =
     "https://api-car-rental.binaracademy.org/customer/auth/register";
@@ -36,7 +36,7 @@ export default function SignUp() {
   const onChangePassword = (e) => {
     const value = e.target.value;
     setPassword(value);
-    setPasswordValidation(value.length >= 6);
+    // setPasswordValidation(value.length >= 6);
     // setHasSubmitted(false);
     setError("");
   };
@@ -81,8 +81,12 @@ export default function SignUp() {
           <CloseButton className={style.close} onClick={handleClose} />
         </div>
         <div className={style.regist}>
-          <img src={Logo} alt="Binar Car Rental Logo" />
-          <h1>Sign Up</h1>
+          <img
+            className={style.logoDesktop}
+            src={Logo}
+            alt="Binar Car Rental Logo"
+          />
+          <h1 className={style.title}>Sign Up</h1>
 
           <div>
             {error && (
@@ -131,17 +135,17 @@ export default function SignUp() {
                 onChange={onChangePassword}
                 value={password}
                 required
-                style={{
-                  border: passwordValidation
-                    ? "1px solid #ced4da"
-                    : "2px solid red",
-                }}
+                // style={{
+                //   border: passwordValidation
+                //     ? "1px solid #ced4da"
+                //     : "2px solid red",
+                // }}
               />
-              {!passwordValidation && (
+              {/* {!passwordValidation && (
                 <p style={{ color: "red" }}>
                   Password must be at least 6 characters long.
                 </p>
-              )}
+              )} */}
             </Form.Group>
             <Form.Group
               className="mb-3"
