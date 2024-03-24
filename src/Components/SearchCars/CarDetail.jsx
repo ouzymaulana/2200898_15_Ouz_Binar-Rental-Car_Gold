@@ -38,7 +38,6 @@ const CarDetail = () => {
   const redirectPage = () => {
     const currentUrl = window.location.href;
     localStorage.setItem("savedUrl", currentUrl);
-    console.log("Current URL saved to localStorage:", currentUrl);
     if (!localStorage.getItem("token")) {
       navigate("/sign-in");
     } else {
