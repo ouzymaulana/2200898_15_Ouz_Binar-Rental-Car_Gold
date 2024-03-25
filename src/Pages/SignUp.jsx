@@ -15,9 +15,7 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [passwordValidation, setPasswordValidation] = useState(
-    password.length >= 6
-  );
+  // const [passwordValidation, setPasswordValidation] = useState(false);
   // const [hasSubmitted, setHasSubmitted] = useState(false);
   const baseURL =
     "https://api-car-rental.binaracademy.org/customer/auth/register";
@@ -38,9 +36,13 @@ export default function SignUp() {
   const onChangePassword = (e) => {
     const value = e.target.value;
     setPassword(value);
-    setPasswordValidation(value.length >= 6);
+    // setPasswordValidation(value.length >= 6);
     // setHasSubmitted(false);
     setError("");
+  };
+
+  const handleClose = () => {
+    navigate(location.state?.from || "/");
   };
 
   const handleSubmit = async (e) => {
@@ -48,9 +50,10 @@ export default function SignUp() {
 
     // setHasSubmitted(true); // Set submitted flag
 
-    if (password.length < 6) {
-      return;
-    }
+    // if (!validatePassword(password)) {
+    //   setError("Password must be at least 6 characters long.");
+    //   return;
+    // }
 
     try {
       const data = {
@@ -72,11 +75,18 @@ export default function SignUp() {
 
   return (
     <>
-      <CloseButton className={style.close} />
       <div className={style.container}>
+        <div className={style.navbar}>
+          <img className={style.logo} src={Logo} alt="" />
+          <CloseButton className={style.close} onClick={handleClose} />
+        </div>
         <div className={style.regist}>
-          <img src={Logo} alt="Binar Car Rental Logo" />
-          <h1>Sign Up</h1>
+          <img
+            className={style.logoDesktop}
+            src={Logo}
+            alt="Binar Car Rental Logo"
+          />
+          <h1 className={style.title}>Sign Up</h1>
 
           <div>
             {error && (
@@ -94,7 +104,7 @@ export default function SignUp() {
             )}
           </div>
 
-          <Form>
+          <Form className={style.form}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Nama*</Form.Label>
               <Form.Control
@@ -107,7 +117,7 @@ export default function SignUp() {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Email</Form.Label>
+              <Form.Label>Email*</Form.Label>
               <Form.Control
                 type="email"
                 placeholder="Contoh: johndee@gmail.com"
@@ -118,27 +128,24 @@ export default function SignUp() {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
+              <Form.Label>Create Password*</Form.Label>
               <Form.Control
                 type="password"
                 placeholder="6+ karakter"
                 onChange={onChangePassword}
                 value={password}
                 required
-                style={{
-                  border: passwordValidation
-                    ? "1px solid #ced4da"
-                    : "2px solid red",
-                }}
+                // style={{
+                //   border: passwordValidation
+                //     ? "1px solid #ced4da"
+                //     : "2px solid red",
+                // }}
               />
-              {/* {!password && password.length === 0 && (
-                <p style={{ color: "red" }}>Please enter a password.</p>
-              )}
-              {!passwordValidation && hasSubmitted} && (
-              <p style={{ color: "red" }}>
-                Password must be at least 6 characters long.
-              </p>
-              ) */}
+              {/* {!passwordValidation && (
+                <p style={{ color: "red" }}>
+                  Password must be at least 6 characters long.
+                </p>
+              )} */}
             </Form.Group>
             <Form.Group
               className="mb-3"
@@ -146,7 +153,7 @@ export default function SignUp() {
             ></Form.Group>
 
             <Button
-              className={style.submit}
+              className={style.button}
               variant="primary"
               type="submit"
               onClick={handleSubmit}
@@ -154,7 +161,7 @@ export default function SignUp() {
               Sign Up
             </Button>
           </Form>
-          <p>
+          <p className={style.suggestion}>
             Already have an acoount? <Link to="/sign-in">Sign in here</Link>
           </p>
         </div>

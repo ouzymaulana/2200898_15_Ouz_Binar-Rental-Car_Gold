@@ -1,22 +1,35 @@
 .container {
   display: grid;
   grid-template-areas: "regist sidebar";
+  grid-template-columns: 1fr 1fr;
   height: 100vh;
   margin: 0%;
 }
 
 .regist {
   grid-area: regist;
-  padding: 200px 100px 0 100px;
+  margin: 95px 200px 90px 200px;
   text-align: left;
+  justify-self: center;
 }
 
 .sidebar {
   grid-area: sidebar;
-  background-color: blue;
+  background-color: #0d28a6;
+  display: grid;
 }
 
-.alertError {
+.navbar {
+  display: none;
+}
+
+.title {
+  margin-top: 32px;
+  margin-bottom: 32px;
+  size: 24px;
+}
+
+.alert {
   color: #d00c1a;
   font-size: 12px;
   font-family: Arial;
@@ -24,10 +37,81 @@
   height: 50px;
 }
 
-.alertSuccess {
-  color: #097f34;
-  font-size: 12px;
-  font-family: Arial;
-  width: 100%;
-  height: 50px;
+.close {
+  display: none;
+}
+
+.button {
+  padding: 8px 150px 8px 150px !important;
+  background-color: #0d28a6 !important;
+  margin-top: 25px;
+  margin-bottom: 32px;
+}
+
+@media screen and (max-width: 425px) {
+  .container {
+    display: block;
+    /* grid-template-columns: 1fr;
+    grid-template-areas: "regist"; */
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .navbar {
+    display: flex;
+  }
+
+  .close {
+    display: block;
+    margin-top: 29px;
+    margin-right: 16px;
+    margin-left: 200px;
+  }
+
+  .logo {
+    margin-top: 29px;
+    margin-left: 16px;
+  }
+
+  .logoDesktop {
+    display: none;
+  }
+
+  .title {
+    margin-top: 32px;
+    margin-bottom: 32px;
+  }
+
+  .regist {
+    padding: 16px;
+    grid-area: regist;
+    margin: 0;
+  }
+
+  .suggestion {
+    font-family: Arial;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
+
+  .title {
+    size: 24px;
+    font-weight: 700px;
+    margin-bottom: 32.07px;
+    margin-top: 32px;
+  }
+
+  .button {
+    padding: 8px 134px 8px 134px !important;
+    margin-top: 20px;
+    margin-bottom: 32px;
+    size: 14px;
+    line-height: 20px;
+    font-weight: 700px;
+  }
 }
