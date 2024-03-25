@@ -33,16 +33,6 @@ export default function SignIn() {
     navigate(location.state?.from || "/");
   };
 
-  // const redirectSubmit = () => {
-  //   // eslint-disable-next-line react-hooks/rules-of-hooks
-  //   useEffect(() => {
-  //     const redirectSubmit = localStorage.getItem("savedUrl");
-  //     if (redirectSubmit) {
-  //       window.location.href = redirectSubmit;
-  //     }
-  //   }, []);
-  // };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
