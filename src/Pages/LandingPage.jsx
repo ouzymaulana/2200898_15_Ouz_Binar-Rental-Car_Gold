@@ -9,7 +9,7 @@ import Testimonial from "../Components/Testimonial";
 export default function LandingPage() {
   return (
     <>
-      <Header />
+      <Header showImage={true} />
       <OurService />
       <WhyUs />
       <Testimonial />

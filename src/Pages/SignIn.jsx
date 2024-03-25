@@ -5,7 +5,7 @@ import CloseButton from "react-bootstrap/CloseButton";
 import SidePageRegistry from "../Components/SidePageRegistry";
 import styles from "../style/signIn.module.css";
 import Logo from "../assets/img/Logo.jpg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 
@@ -49,6 +49,10 @@ export default function SignIn() {
       }
     } catch (error) {
       setError("Masukkan email dan password yang benar", error);
+    }
+    const redirectSubmit = localStorage.getItem("savedUrl");
+    if (redirectSubmit) {
+      window.location.href = redirectSubmit;
     }
   };
 

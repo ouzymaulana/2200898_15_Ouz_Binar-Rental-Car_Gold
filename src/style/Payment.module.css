@@ -19,7 +19,7 @@
   width: 240.25px;
 }
 
-.cardsLabel {
+.cardsLabelTitle {
   margin-bottom: 8px;
   display: flex;
   justify-content: space-between;
@@ -33,37 +33,7 @@
   flex-direction: row;
 }
 
-.cardsText {
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 18px;
-  display: flex;
-  flex-direction: row;
-}
-
-.cardsText :last-child {
-  margin-left: auto;
-}
-
-.cardsTextButton {
-  width: 61px;
-  background-color: transparent !important;
-  color: black !important;
-  margin: 0 34px 0 0 !important;
-  padding: 0 !important;
-  border: 1px solid #d0d0d0 !important;
-  border-radius: 4px !important;
-  font-size: 12px !important;
-  font-weight: 400 !important;
-  line-height: 18px !important;
-  text-align: center;
-}
-
-.cardsDetailText {
-  margin-bottom: 8px;
-}
-
-.cardsDetailButton {
+.cardsButton {
   margin: 16px 0 24px;
   background-color: #5cb85f !important;
   border: none !important;
@@ -76,4 +46,81 @@
   width: 87px;
   display: flex;
   justify-content: center;
+}
+
+.bankText {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  display: flex;
+  flex-direction: row;
+}
+
+.bankText :last-child {
+  margin-left: auto;
+}
+
+.bankButton {
+  width: 61px;
+  background-color: transparent;
+  color: black;
+  margin: 0 34px 0 0;
+  padding: 0;
+  border: 1px solid #d0d0d0;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  text-align: center;
+}
+
+.paymentTitle {
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.paymentText {
+  font-family: Rubik;
+  margin-bottom: 4px;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.paymentContainer {
+  width: 557px;
+  padding-left: 12px;
+  margin-bottom: 16px;
+  border-radius: 2px;
+  border: 1px solid #3c3c3c;
+  align-items: baseline;
+}
+
+.paymentInput {
+  width: 507px;
+  height: 18px;
+  padding: 0px;
+  border: none transparent;
+}
+
+.copyButton {
+  width: 9.75px;
+  margin: 9px 12px 9px 8px;
+  padding: 0px;
+  border: none transparent;
+}
+
+.tabsTitle {
+  color: black !important;
+  margin-bottom: 16px !important;
+  font-size: 14px;
+  line-height: 20px;
+  align-items: center;
+}
+
+.tabsText {
+  color: #8a8a8a;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24.5px;
 }

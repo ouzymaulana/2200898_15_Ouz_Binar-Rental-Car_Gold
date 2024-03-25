@@ -5,7 +5,7 @@ import Payment from "../Components/Payment";
 const PaymentCars = () => {
   return (
     <>
-      <Header />
+      <Header showImage={false} />
       <Payment />
       <Footer />
     </>

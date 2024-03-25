@@ -1,10 +1,14 @@
-import { Card, Col, Button } from "react-bootstrap";
+import { Card, Col, Button, Tab, Tabs } from "react-bootstrap";
 import style from "./../style/Payment.module.css";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import iconCheck from "./../assets/icon/fi_check.png";
 import moment from "moment";
+import copy from "copy-to-clipboard";
+import iconCheck from "./../assets/icon/fi_check.png";
+import iconCopy from "./../assets/icon/fi_copy.png";
+// import { useDispatch, useSelector } from "react-redux";
+// import { pagesUpdate } from "../redux/action/pages";
 
 // eslint-disable-next-line react/prop-types
 const Timer = ({ duration }) => {
@@ -30,9 +34,36 @@ const Timer = ({ duration }) => {
   return <div>{GetFormattedTime(time)}</div>;
 };
 
+// const PAGES_LIST = [
+//   {
+//     pageNumber: 1,
+//     text: "Bayar",
+//   },
+//   {
+//     pageNumber: 2,
+//     text: "Upload",
+//   },
+//   {
+//     pageNumber: 3,
+//     text: "Konfirmasi",
+//   },
+// ];
+
+// const Page = ({ pageNumber, text }) => {
+//   const dispatch = useDispatch();
+//   const page = useSelector((state) => state.pages.page);
+//   const handleClick = () => {
+//     dispatch(pagesUpdate(pageNumber));
+//   };
+//   return;
+// };
+
 const Payment = () => {
+  // const page = useSelector((state) => state.pages.page);
   const [carItem, setCarItem] = useState([]);
+  const [, setDataCar] = useState([]);
   const { id } = useParams();
+
   const getDetailCar = async () => {
     const axiosConfig = {
       headers: {
@@ -54,6 +85,7 @@ const Payment = () => {
       console.error(error);
     }
   };
+
   useEffect(() => {
     getDetailCar();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -70,25 +102,74 @@ const Payment = () => {
   const [checkBNI, setCheckBNI] = useState(false);
   const [checkMandiri, setCheckMandiri] = useState(false);
   const [active, setActive] = useState([]);
-  console.log(active);
+  const [selectBank, setSelectBank] = useState("");
+  localStorage.setItem("selectBank", active);
+  const totalPrice = carItem.price * rangeDate;
 
   const handleButton = (buttonPayment) => {
     setActive(active === buttonPayment ? "" : buttonPayment);
+    setSelectBank(buttonPayment);
     setCheckBCA(buttonPayment === "BCA" && !checkBCA);
     setCheckBNI(buttonPayment === "BNI" && !checkBNI);
     setCheckMandiri(buttonPayment === "Mandiri" && !checkMandiri);
+  };
+
+  useEffect(() => {
+    const storedKey = localStorage.getItem("selectBank");
+    if (storedKey) {
+      setSelectBank(storedKey);
+    }
+  }, []);
+
+  const textRef1 = useRef(null);
+  const textRef2 = useRef(null);
+  const copyToClipboard = (textRef) => {
+    let copyText = textRef.current.value;
+    copy(copyText);
+  };
+
+  const postDetailCar = async () => {
+    const axiosConfig = {
+      headers: {
+        accept: "application/json",
+        access_token:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGJjci5pbyIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTY2NTI0MjUwOX0.ZTx8L1MqJ4Az8KzoeYU2S614EQPnqk6Owv03PUSnkzc",
+        "Content-Type": "application/json",
+      },
+    };
+    try {
+      const payload = {
+        start_rent_at: startdate,
+        finish_rent_at: enddate,
+        car_id: id,
+        total_price: totalPrice,
+      };
+
+      const response = await axios.post(
+        "https://api-car-rental.binaracademy.org/customer/order/",
+        payload,
+        axiosConfig
+      );
+
+      if (response.status === 201) {
+        setDataCar(response.data);
+      }
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
     <>
       <Card>
         <Card.Body
-          className={style.cardsContainer}
-          style={{ margin: "0 199px 24px" }}
+          className={` ${style.cardsContainer}`}
+          style={{ margin: "-60px 199px 24px", backgroundColor: "white" }}
         >
           <Col className={style.cardsPayment}>
             <div className={style.cardsTitle}>Detail Pesananmu</div>
-            <div className={style.cardsLabel}>
+            <div className={style.cardsLabelTitle}>
               <div className={style.cardsLabelContainer}>Nama/Tipe Mobil</div>
               <div className={style.cardsLabelContainer}>Kategori</div>
               <div className={style.cardsLabelContainer}>
@@ -127,15 +208,15 @@ const Payment = () => {
                   Banking atau Mobile Banking
                 </div>
                 <Col>
-                  <Col className={style.cardsText}>
-                    <Button
-                      className={`${style.cardsTextButton} ${
+                  <Col className={style.bankText}>
+                    <button
+                      className={`${style.bankButton} ${
                         active === "BCA" ? "active" : ""
                       }`}
                       onClick={() => handleButton("BCA")}
                     >
                       BCA
-                    </Button>
+                    </button>
                     <div style={{ margin: "6px 0" }}>BCA Transfer</div>
                     {active === "BCA" && checkBCA && (
                       <img src={iconCheck} alt="Check Icon" />
@@ -144,15 +225,15 @@ const Payment = () => {
 
                   <hr style={{ margin: "16px 0px" }} />
 
-                  <Col className={style.cardsText}>
-                    <Button
-                      className={`${style.cardsTextButton} ${
+                  <Col className={style.bankText}>
+                    <button
+                      className={`${style.bankButton} ${
                         active === "BNI" ? "active" : ""
                       }`}
                       onClick={() => handleButton("BNI")}
                     >
                       BNI
-                    </Button>
+                    </button>
                     <div style={{ margin: "6px 0" }}>BNI Transfer</div>
                     {active === "BNI" && checkBNI && (
                       <img src={iconCheck} alt="Check Icon" />
@@ -161,15 +242,15 @@ const Payment = () => {
 
                   <hr style={{ margin: "16px 0px" }} />
 
-                  <Col className={style.cardsText}>
-                    <Button
-                      className={`${style.cardsTextButton} ${
+                  <Col className={style.bankText}>
+                    <button
+                      className={`${style.bankButton} ${
                         active === "Mandiri" ? "active" : ""
                       }`}
                       onClick={() => handleButton("Mandiri")}
                     >
                       Mandiri
-                    </Button>
+                    </button>
                     <div style={{ margin: "6px 0" }}>Mandiri Transfer</div>
                     {active === "Mandiri" && checkMandiri && (
                       <img src={iconCheck} alt="Check Icon" />
@@ -205,7 +286,8 @@ const Payment = () => {
               <Col>
                 <div className={style.cardsTitle}>Harga</div>
                 <div
-                  className={`${style.cardsDetailText} d-flex flex-row justify-content-between`}
+                  className={` d-flex flex-row justify-content-between`}
+                  style={{ marginBottom: "8px" }}
                 >
                   <li>
                     Sewa Mobil{" "}
@@ -227,13 +309,15 @@ const Payment = () => {
               <Col>
                 <div className={style.cardsTitle}>Biaya Lainnya</div>
                 <div
-                  className={`${style.cardsDetailText} d-flex flex-row justify-content-between`}
+                  className={`d-flex flex-row justify-content-between`}
+                  style={{ marginBottom: "8px" }}
                 >
                   <li>Pajak</li>
                   <div style={{ color: "#5CB85F" }}>Termasuk</div>
                 </div>
                 <div
-                  className={`${style.cardsDetailText} d-flex flex-row justify-content-between`}
+                  className={`d-flex flex-row justify-content-between`}
+                  style={{ marginBottom: "8px" }}
                 >
                   <li>Biaya makan sopir</li>
                   <div style={{ color: "#5CB85F" }}>Termasuk</div>
@@ -241,8 +325,8 @@ const Payment = () => {
               </Col>
 
               <div className={style.cardsTitle}>Belum termasuk</div>
-              <li className={style.cardsDetailText}>Bensin</li>
-              <li className={style.cardsDetailText}>Tol dan parkir</li>
+              <li style={{ marginBottom: "8px" }}>Bensin</li>
+              <li style={{ marginBottom: "8px" }}>Tol dan parkir</li>
 
               <hr style={{ marginTop: "24px", marginBottom: "16px" }} />
 
@@ -257,12 +341,16 @@ const Payment = () => {
                   }).format(carItem.price * rangeDate)}
                 </Card.Text>
               </Col>
-
               <Button
                 disabled={
                   active !== "BCA" && active !== "BNI" && active !== "Mandiri"
                 }
-                className={`${style.cardsDetailButton} w-100`}
+                className={`${style.cardsButton} w-100`}
+                onClick={postDetailCar}
+                // onClick={() => {
+                //   handleClick(pageNumber);
+                //   console.log(pageNumber);
+                // }}
               >
                 Bayar
               </Button>
@@ -323,11 +411,74 @@ const Payment = () => {
                   style={{ marginBottom: "16px" }}
                 >
                   <div className={style.cardsTitle}>Lakukan Transfer Ke</div>
-                  <div style={{ display: "flex", gap: "16px" }}>
-                    <div>BCA</div>
-                    <div style={{ display: "flex", flexDirection: "column" }}>
-                      <div>BCA Transfer</div>
-                      <div>a.n Binar Car Rental</div>
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: "16px",
+                      alignItems: "baseline",
+                    }}
+                  >
+                    <button
+                      className={style.bankButton}
+                      style={{ height: "30px", margin: "1px" }}
+                    >
+                      {selectBank}
+                    </button>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        marginBottom: "16px",
+                      }}
+                    >
+                      <div className={style.paymentTitle}>
+                        {selectBank} Transfer
+                      </div>
+                      <div className={style.paymentTitle}>
+                        a.n Binar Car Rental
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div className={style.paymentText}>Nomor Rekening</div>
+                    <div className={style.paymentContainer}>
+                      <input
+                        className={style.paymentInput}
+                        style={{
+                          fontWeight: "400",
+                          fontSize: "12px",
+                          lineHeight: "18px",
+                        }}
+                        defaultValue="54104257877"
+                        type="text"
+                        ref={textRef1}
+                      />
+                      <button
+                        className={style.copyButton}
+                        onClick={() => copyToClipboard(textRef1)}
+                      >
+                        <img src={iconCopy} />
+                      </button>
+                    </div>
+
+                    <div className={style.paymentText}>Total Bayar</div>
+                    <div className={style.paymentContainer}>
+                      <input
+                        className={style.paymentInput}
+                        style={{
+                          fontWeight: "700",
+                          fontSize: "12px",
+                          lineHeight: "18px",
+                        }}
+                        type="text"
+                        ref={textRef2}
+                      />
+                      <button
+                        className={style.copyButton}
+                        onClick={() => copyToClipboard(textRef2)}
+                      >
+                        <img src={iconCopy} />
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -350,19 +501,268 @@ const Payment = () => {
                     style={{ marginBottom: "24px" }}
                   >
                     Instruksi Pembayaran
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      justifyContent: "space-around",
-                    }}
-                  >
-                    <div>ATM BCA</div>
-                    <div>M-BCA</div>
-                    <div>BCA Klik</div>
-                    <div>Internet Banking</div>
-                  </div>
+                  </div>{" "}
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-around",
+                  }}
+                >
+                  <Col style={{ display: "flex", flexDirection: "column" }}>
+                    <Tabs
+                      className={`active ${style.tabsTitle}`}
+                      activeKey={selectBank}
+                      justify
+                    >
+                      <Tab eventKey="BCA" title="BCA">
+                        <Tabs className={`active ${style.tabsTitle}`} justify>
+                          <Tab
+                            className={style.tabsText}
+                            eventKey="ATM BCA"
+                            title="ATM BCA"
+                          >
+                            <ul>
+                              <li>Masukkan kartu ATM dan PIN BCA kamu. </li>
+                              <li>
+                                Pada menu utama, pilih menu ” Transaksi lainnya
+                                “
+                              </li>
+                              <li>Pilih menu</li>
+                              “Transfer” dan kemudian pilih “BCA Virtual
+                              Account“
+                              <li>
+                                Masukkan no. BCA Virtual Account & klik
+                                “Lanjutkan“
+                              </li>
+                              <li>
+                                Periksa kembali rincian pembayaran kamu, lalu
+                                pilih Ya
+                              </li>
+                            </ul>
+                          </Tab>
+                          <Tab
+                            className={style.tabsText}
+                            eventKey="M-BCA"
+                            title="M-BCA"
+                          >
+                            <ul>
+                              <li>Lakukan log in pada aplikasi BCA mobile.</li>
+                              <li>Pilih “m-BCA” masukan kode akses m-BCA.</li>
+                              <li>
+                                Pilih “m-Transfer“, lalu pilih “BCA Virtual
+                                Account“
+                              </li>
+                              <li>
+                                Masukkan nomor BCA Virtual Account dan klik “OK“
+                              </li>
+                              <li>
+                                Konfirmasi no virtual account dan rekening
+                                pendebetan
+                              </li>
+                              <li>
+                                Periksa kembalian rincian pembayaran kamu, lalu
+                                klik “Ya”
+                              </li>
+                              <li>Masukan pin m-BCA untuk verifikasi</li>
+                            </ul>
+                          </Tab>
+                          <Tab
+                            className={style.tabsText}
+                            eventKey="BCA Klik"
+                            title="BCA Klik"
+                          >
+                            <ul>
+                              <li>
+                                Login pada aplikasi KlikBCA, masukkan user ID &
+                                PIN
+                              </li>
+                              <li>
+                                Pilih “Transfer Dana“, kemudian pilih “Transfer
+                                ke BCA Virtual Account“
+                              </li>
+                              <li>
+                                Masukkan no. BCA Virtual Account & klik
+                                “Lanjutkan“
+                              </li>
+                              <li>
+                                Pastikan data yang dimasukkan sudah benar, dan
+                                Input “Respon KeyBCA“, lalu klik “Kirim“
+                              </li>
+                            </ul>
+                          </Tab>
+                        </Tabs>
+                      </Tab>
+
+                      <Tab eventKey="BNI" title="BNI">
+                        <Tabs className={`active ${style.tabsTitle}`} justify>
+                          <Tab
+                            className={style.tabsText}
+                            eventKey="ATM BNI"
+                            title="ATM BNI"
+                          >
+                            <ul>
+                              <li>Masukkan kartu ATM dan PIN BNI kamu</li>
+                              <li>
+                                Pada menu utama, pilih menu “Menu Lainnya” &gt;
+                                “Transfer” &gt; “Rekening Tabungan” &gt; ke
+                                “Rekening BNI”
+                              </li>
+                              <li>Masukkan nomor Virtual Account</li>
+                              <li>Masukkan jumlah pembayaran sesuai tagihan</li>
+                              <li>
+                                Di halaman konfirmasi, pastikan data transaksi
+                                sudah benar kemudian pilih “Ya“
+                              </li>
+                            </ul>
+                          </Tab>
+                          <Tab
+                            className={style.tabsText}
+                            eventKey="Mobile Banking BNI"
+                            title="Mobile Banking BNI"
+                          >
+                            <ul>
+                              <li>
+                                {" "}
+                                Akses BNI Mobile Banking melalui handphone.
+                              </li>
+                              <li>Masukkan User ID dan Password</li>
+                              <li>
+                                Pilih menu “Transfer“, lalu pilih “Antar
+                                Rekening BNI“, pilih “Input Rekening Baru”
+                              </li>
+                              <li>
+                                Masukkan nomor Virtual Account lalu masukkan
+                                jumlah pembayaran
+                              </li>
+                              <li>
+                                Pastikan data transaksi sudah benar kemudian
+                                pilih “Ya“
+                              </li>
+                              <li>Masukkan password untuk verifikasi</li>
+                            </ul>
+                          </Tab>
+                          <Tab
+                            className={style.tabsText}
+                            eventKey="Internet Banking BNI"
+                            title="Internet Banking BNI"
+                          >
+                            <ul>
+                              <li>
+                                Masuk ke https://ibank.bni.co.id, masukkan User
+                                ID dan Password
+                              </li>
+                              <li>
+                                Pilih menu “Transfer“, lalu pilih “Tambah
+                                Rekening Favorit“. Jika menggunakan Desktop.
+                                tambah rekening pada menu “Transaksi” kemudian
+                                “Atur Rekening Tujuan” lalu pilih “Tambah
+                                Rekening Tujuan”
+                              </li>
+                              <li>Masukkan nomor Virtual Account</li>
+                              <li>
+                                Masukkan Kode Otentikasi dan Nomor Rekening
+                                berhasil ditambahkan
+                              </li>
+                              <li>
+                                Pilih menu “Transfer“, lalu pilih “Transfer
+                                Antar Rekening BNI“, pilih “Rekening Tujuan”
+                              </li>
+                              <li>
+                                Pilih Rekening Debit, masukkan jumlah pembayaran
+                                sesuai tagihan
+                              </li>
+                              <li>Masukkan Kode Otentikasi</li>
+                            </ul>
+                          </Tab>
+                        </Tabs>
+                      </Tab>
+
+                      <Tab eventKey="Mandiri" title="Mandiri">
+                        <Tabs className={`active ${style.tabsTitle}`} justify>
+                          <Tab
+                            className={style.tabsText}
+                            eventKey="ATM Mandiri"
+                            title="ATM Mandiri"
+                          >
+                            <ul>
+                              <li>Masukkan PIN ATM kamu</li>
+                              <li>
+                                Pada menu utama, pilih menu “Bayar/Beli” lalu
+                                pilih menu “Multi Payment” (Jika di layar belum
+                                tersedia, tekan menu “Lainnya” dan pilih “Multi
+                                Payment“)
+                              </li>
+                              <li>
+                                Masukkan nomor 88871 pada kode perusahaan
+                                kemudian tekan tombol “Benar“
+                              </li>
+                              <li>
+                                Masukkan kode pembayaran (kode pembayaran
+                                Mandiri billpayment kamu)
+                              </li>
+                              <li>
+                                Periksa kembali data transaksimu dan selesaikan
+                                proses pembayaran
+                              </li>
+                            </ul>
+                          </Tab>
+                          <Tab
+                            className={style.tabsText}
+                            eventKey="Mandiri Internet Banking"
+                            title="Mandiri Internet Banking"
+                          >
+                            <ul>
+                              <li>
+                                Lakukan Login ke Internet Banking Mandiri kamu
+                              </li>
+                              <li>
+                                Pada menu utama, pilih menu “Bayar” lalu pilih
+                                menu “Multi Payment“
+                              </li>
+                              <li>
+                                Pilih akun kamu di bagian Dari Rekening,
+                                kemudian di Penyedia Jasa pilih “Blibli.com“
+                              </li>
+                              <li>
+                                Masukkan kode pembayaran (kode pembayaran
+                                Mandiri billpayment kamu), dan klik “Lanjutkan“
+                              </li>
+                              <li>
+                                Periksa kembali nama perusahaan, nomor pesanan,
+                                dan jumlah pembayaran kamu
+                              </li>
+                              <li>
+                                Selesaikan pembayaran dengan menggunakan Token
+                                Mandiri
+                              </li>
+                            </ul>
+                          </Tab>
+                          <Tab
+                            className={style.tabsText}
+                            eventKey="Mandiri Online"
+                            title="Mandiri Online"
+                          >
+                            <ul>
+                              <li>Lakukan Login ke Mandiri Online kamu</li>
+                              <li>Pada menu utama, pilih menu “Bayar“</li>
+                              <li>Lalu pilih menu “Multi Payment“</li>
+                              <li>Pilih Penyedia Jasa “Blibli.com“</li>
+                              <li>
+                                Masukkan kode pembayaran [Kode pembayaran
+                                Mandiri billpayment], dan klik “Lanjutkan“
+                              </li>
+                              <li>
+                                Periksa kembali data transaksi kamu dan
+                                selesaikan proses pembayaran
+                              </li>
+                            </ul>
+                          </Tab>
+                        </Tabs>
+                      </Tab>
+                    </Tabs>
+                  </Col>
                 </div>
               </Col>
             </Card.Body>
@@ -382,7 +782,7 @@ const Payment = () => {
             >
               Klik konfirmasi pembayaran untuk mempercepat proses pengecekan
             </div>
-            <Button className={`${style.cardsDetailButton} w-100`}>
+            <Button className={`${style.cardsButton} w-100`}>
               Konfirmasi Pembayaran
             </Button>
           </Card.Body>
