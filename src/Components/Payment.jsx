@@ -7,6 +7,8 @@ import moment from "moment";
 import copy from "copy-to-clipboard";
 import iconCheck from "./../assets/icon/fi_check.png";
 import iconCopy from "./../assets/icon/fi_copy.png";
+// import { useDispatch, useSelector } from "react-redux";
+// import { pagesUpdate } from "../redux/action/pages";
 
 // eslint-disable-next-line react/prop-types
 const Timer = ({ duration }) => {
@@ -32,9 +34,36 @@ const Timer = ({ duration }) => {
   return <div>{GetFormattedTime(time)}</div>;
 };
 
+// const PAGES_LIST = [
+//   {
+//     pageNumber: 1,
+//     text: "Bayar",
+//   },
+//   {
+//     pageNumber: 2,
+//     text: "Upload",
+//   },
+//   {
+//     pageNumber: 3,
+//     text: "Konfirmasi",
+//   },
+// ];
+
+// const Page = ({ pageNumber, text }) => {
+//   const dispatch = useDispatch();
+//   const page = useSelector((state) => state.pages.page);
+//   const handleClick = () => {
+//     dispatch(pagesUpdate(pageNumber));
+//   };
+//   return;
+// };
+
 const Payment = () => {
+  // const page = useSelector((state) => state.pages.page);
   const [carItem, setCarItem] = useState([]);
+  const [, setDataCar] = useState([]);
   const { id } = useParams();
+
   const getDetailCar = async () => {
     const axiosConfig = {
       headers: {
@@ -56,6 +85,7 @@ const Payment = () => {
       console.error(error);
     }
   };
+
   useEffect(() => {
     getDetailCar();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -72,27 +102,70 @@ const Payment = () => {
   const [checkBNI, setCheckBNI] = useState(false);
   const [checkMandiri, setCheckMandiri] = useState(false);
   const [active, setActive] = useState([]);
+  const [selectBank, setSelectBank] = useState("");
+  localStorage.setItem("selectBank", active);
+  const totalPrice = carItem.price * rangeDate;
 
   const handleButton = (buttonPayment) => {
     setActive(active === buttonPayment ? "" : buttonPayment);
+    setSelectBank(buttonPayment);
     setCheckBCA(buttonPayment === "BCA" && !checkBCA);
     setCheckBNI(buttonPayment === "BNI" && !checkBNI);
     setCheckMandiri(buttonPayment === "Mandiri" && !checkMandiri);
   };
 
-  const textRef1 = useRef();
-  const textRef2 = useRef();
+  useEffect(() => {
+    const storedKey = localStorage.getItem("selectBank");
+    if (storedKey) {
+      setSelectBank(storedKey);
+    }
+  }, []);
+
+  const textRef1 = useRef(null);
+  const textRef2 = useRef(null);
   const copyToClipboard = (textRef) => {
     let copyText = textRef.current.value;
     copy(copyText);
+  };
+
+  const postDetailCar = async () => {
+    const axiosConfig = {
+      headers: {
+        accept: "application/json",
+        access_token:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGJjci5pbyIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTY2NTI0MjUwOX0.ZTx8L1MqJ4Az8KzoeYU2S614EQPnqk6Owv03PUSnkzc",
+        "Content-Type": "application/json",
+      },
+    };
+    try {
+      const payload = {
+        start_rent_at: startdate,
+        finish_rent_at: enddate,
+        car_id: id,
+        total_price: totalPrice,
+      };
+
+      const response = await axios.post(
+        "https://api-car-rental.binaracademy.org/customer/order/",
+        payload,
+        axiosConfig
+      );
+
+      if (response.status === 201) {
+        setDataCar(response.data);
+      }
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
     <>
       <Card>
         <Card.Body
-          className={style.cardsContainer}
-          style={{ margin: "0 199px 24px" }}
+          className={` ${style.cardsContainer}`}
+          style={{ margin: "-60px 199px 24px", backgroundColor: "white" }}
         >
           <Col className={style.cardsPayment}>
             <div className={style.cardsTitle}>Detail Pesananmu</div>
@@ -268,12 +341,16 @@ const Payment = () => {
                   }).format(carItem.price * rangeDate)}
                 </Card.Text>
               </Col>
-
               <Button
                 disabled={
                   active !== "BCA" && active !== "BNI" && active !== "Mandiri"
                 }
                 className={`${style.cardsButton} w-100`}
+                onClick={postDetailCar}
+                // onClick={() => {
+                //   handleClick(pageNumber);
+                //   console.log(pageNumber);
+                // }}
               >
                 Bayar
               </Button>
@@ -345,7 +422,7 @@ const Payment = () => {
                       className={style.bankButton}
                       style={{ height: "30px", margin: "1px" }}
                     >
-                      .....
+                      {selectBank}
                     </button>
                     <div
                       style={{
@@ -354,7 +431,9 @@ const Payment = () => {
                         marginBottom: "16px",
                       }}
                     >
-                      <div className={style.paymentTitle}>.....</div>
+                      <div className={style.paymentTitle}>
+                        {selectBank} Transfer
+                      </div>
                       <div className={style.paymentTitle}>
                         a.n Binar Car Rental
                       </div>
@@ -370,6 +449,7 @@ const Payment = () => {
                           fontSize: "12px",
                           lineHeight: "18px",
                         }}
+                        defaultValue="54104257877"
                         type="text"
                         ref={textRef1}
                       />
@@ -431,219 +511,255 @@ const Payment = () => {
                   }}
                 >
                   <Col style={{ display: "flex", flexDirection: "column" }}>
-                    <Tabs className={`active ${style.tabsTitle}`} justify>
-                      <Tab
-                        className={style.tabsTitle}
-                        eventKey="ATM BCA"
-                        title="ATM BCA"
-                      >
-                        <ul className={style.tabsText}>
-                          <li>Masukkan kartu ATM dan PIN BCA kamu. </li>
-                          <li>
-                            Pada menu utama, pilih menu ” Transaksi lainnya “
-                          </li>
-                          <li>Pilih menu</li>
-                          “Transfer” dan kemudian pilih “BCA Virtual Account“
-                          <li>
-                            Masukkan no. BCA Virtual Account & klik “Lanjutkan“
-                          </li>
-                          <li>
-                            Periksa kembali rincian pembayaran kamu, lalu pilih
-                            Ya
-                          </li>
-                        </ul>
+                    <Tabs
+                      className={`active ${style.tabsTitle}`}
+                      activeKey={selectBank}
+                      justify
+                    >
+                      <Tab eventKey="BCA" title="BCA">
+                        <Tabs className={`active ${style.tabsTitle}`} justify>
+                          <Tab
+                            className={style.tabsText}
+                            eventKey="ATM BCA"
+                            title="ATM BCA"
+                          >
+                            <ul>
+                              <li>Masukkan kartu ATM dan PIN BCA kamu. </li>
+                              <li>
+                                Pada menu utama, pilih menu ” Transaksi lainnya
+                                “
+                              </li>
+                              <li>Pilih menu</li>
+                              “Transfer” dan kemudian pilih “BCA Virtual
+                              Account“
+                              <li>
+                                Masukkan no. BCA Virtual Account & klik
+                                “Lanjutkan“
+                              </li>
+                              <li>
+                                Periksa kembali rincian pembayaran kamu, lalu
+                                pilih Ya
+                              </li>
+                            </ul>
+                          </Tab>
+                          <Tab
+                            className={style.tabsText}
+                            eventKey="M-BCA"
+                            title="M-BCA"
+                          >
+                            <ul>
+                              <li>Lakukan log in pada aplikasi BCA mobile.</li>
+                              <li>Pilih “m-BCA” masukan kode akses m-BCA.</li>
+                              <li>
+                                Pilih “m-Transfer“, lalu pilih “BCA Virtual
+                                Account“
+                              </li>
+                              <li>
+                                Masukkan nomor BCA Virtual Account dan klik “OK“
+                              </li>
+                              <li>
+                                Konfirmasi no virtual account dan rekening
+                                pendebetan
+                              </li>
+                              <li>
+                                Periksa kembalian rincian pembayaran kamu, lalu
+                                klik “Ya”
+                              </li>
+                              <li>Masukan pin m-BCA untuk verifikasi</li>
+                            </ul>
+                          </Tab>
+                          <Tab
+                            className={style.tabsText}
+                            eventKey="BCA Klik"
+                            title="BCA Klik"
+                          >
+                            <ul>
+                              <li>
+                                Login pada aplikasi KlikBCA, masukkan user ID &
+                                PIN
+                              </li>
+                              <li>
+                                Pilih “Transfer Dana“, kemudian pilih “Transfer
+                                ke BCA Virtual Account“
+                              </li>
+                              <li>
+                                Masukkan no. BCA Virtual Account & klik
+                                “Lanjutkan“
+                              </li>
+                              <li>
+                                Pastikan data yang dimasukkan sudah benar, dan
+                                Input “Respon KeyBCA“, lalu klik “Kirim“
+                              </li>
+                            </ul>
+                          </Tab>
+                        </Tabs>
                       </Tab>
 
-                      <Tab
-                        className={style.tabsTitle}
-                        eventKey="M-BCA"
-                        title="M-BCA"
-                      >
-                        <ul className={style.tabsText}>
-                          <li>Lakukan log in pada aplikasi BCA mobile.</li>
-                          <li>Pilih “m-BCA” masukan kode akses m-BCA.</li>
-                          <li>
-                            Pilih “m-Transfer“, lalu pilih “BCA Virtual Account“
-                          </li>
-                          <li>
-                            Masukkan nomor BCA Virtual Account dan klik “OK“
-                          </li>
-                          <li>
-                            Konfirmasi no virtual account dan rekening
-                            pendebetan
-                          </li>
-                          <li>
-                            Periksa kembalian rincian pembayaran kamu, lalu klik
-                            “Ya”
-                          </li>
-                          <li>Masukan pin m-BCA untuk verifikasi</li>
-                        </ul>
+                      <Tab eventKey="BNI" title="BNI">
+                        <Tabs className={`active ${style.tabsTitle}`} justify>
+                          <Tab
+                            className={style.tabsText}
+                            eventKey="ATM BNI"
+                            title="ATM BNI"
+                          >
+                            <ul>
+                              <li>Masukkan kartu ATM dan PIN BNI kamu</li>
+                              <li>
+                                Pada menu utama, pilih menu “Menu Lainnya” &gt;
+                                “Transfer” &gt; “Rekening Tabungan” &gt; ke
+                                “Rekening BNI”
+                              </li>
+                              <li>Masukkan nomor Virtual Account</li>
+                              <li>Masukkan jumlah pembayaran sesuai tagihan</li>
+                              <li>
+                                Di halaman konfirmasi, pastikan data transaksi
+                                sudah benar kemudian pilih “Ya“
+                              </li>
+                            </ul>
+                          </Tab>
+                          <Tab
+                            className={style.tabsText}
+                            eventKey="Mobile Banking BNI"
+                            title="Mobile Banking BNI"
+                          >
+                            <ul>
+                              <li>
+                                {" "}
+                                Akses BNI Mobile Banking melalui handphone.
+                              </li>
+                              <li>Masukkan User ID dan Password</li>
+                              <li>
+                                Pilih menu “Transfer“, lalu pilih “Antar
+                                Rekening BNI“, pilih “Input Rekening Baru”
+                              </li>
+                              <li>
+                                Masukkan nomor Virtual Account lalu masukkan
+                                jumlah pembayaran
+                              </li>
+                              <li>
+                                Pastikan data transaksi sudah benar kemudian
+                                pilih “Ya“
+                              </li>
+                              <li>Masukkan password untuk verifikasi</li>
+                            </ul>
+                          </Tab>
+                          <Tab
+                            className={style.tabsText}
+                            eventKey="Internet Banking BNI"
+                            title="Internet Banking BNI"
+                          >
+                            <ul>
+                              <li>
+                                Masuk ke https://ibank.bni.co.id, masukkan User
+                                ID dan Password
+                              </li>
+                              <li>
+                                Pilih menu “Transfer“, lalu pilih “Tambah
+                                Rekening Favorit“. Jika menggunakan Desktop.
+                                tambah rekening pada menu “Transaksi” kemudian
+                                “Atur Rekening Tujuan” lalu pilih “Tambah
+                                Rekening Tujuan”
+                              </li>
+                              <li>Masukkan nomor Virtual Account</li>
+                              <li>
+                                Masukkan Kode Otentikasi dan Nomor Rekening
+                                berhasil ditambahkan
+                              </li>
+                              <li>
+                                Pilih menu “Transfer“, lalu pilih “Transfer
+                                Antar Rekening BNI“, pilih “Rekening Tujuan”
+                              </li>
+                              <li>
+                                Pilih Rekening Debit, masukkan jumlah pembayaran
+                                sesuai tagihan
+                              </li>
+                              <li>Masukkan Kode Otentikasi</li>
+                            </ul>
+                          </Tab>
+                        </Tabs>
                       </Tab>
 
-                      <Tab
-                        className={style.tabsTitle}
-                        eventKey="BCA Klik"
-                        title="BCA Klik"
-                      >
-                        <ul className={style.tabsText}>
-                          <li>
-                            Login pada aplikasi KlikBCA, masukkan user ID & PIN
-                          </li>
-                          <li>
-                            Pilih “Transfer Dana“, kemudian pilih “Transfer ke
-                            BCA Virtual Account“
-                          </li>
-                          <li>
-                            Masukkan no. BCA Virtual Account & klik “Lanjutkan“
-                          </li>
-                          <li>
-                            Pastikan data yang dimasukkan sudah benar, dan Input
-                            “Respon KeyBCA“, lalu klik “Kirim“
-                          </li>
-                        </ul>
-                      </Tab>
-                    </Tabs>
-
-                    <Tabs defaultActiveKey="ATM BNI" justify>
-                      <Tab eventKey="ATM BNI" title="ATM BNI">
-                        <ul>
-                          <li>Masukkan kartu ATM dan PIN BNI kamu</li>
-                          <li>
-                            Pada menu utama, pilih menu “Menu Lainnya” &gt;
-                            “Transfer” &gt; “Rekening Tabungan” &gt; ke
-                            “Rekening BNI”
-                          </li>
-                          <li>Masukkan nomor Virtual Account</li>
-                          <li>Masukkan jumlah pembayaran sesuai tagihan</li>
-                          <li>
-                            Di halaman konfirmasi, pastikan data transaksi sudah
-                            benar kemudian pilih “Ya“
-                          </li>
-                        </ul>
-                      </Tab>
-                      <Tab
-                        eventKey="Mobile Banking BNI"
-                        title="Mobile Banking BNI"
-                      >
-                        <ul>
-                          <li> Akses BNI Mobile Banking melalui handphone.</li>
-                          <li>Masukkan User ID dan Password</li>
-                          <li>
-                            Pilih menu “Transfer“, lalu pilih “Antar Rekening
-                            BNI“, pilih “Input Rekening Baru”
-                          </li>
-                          <li>
-                            Masukkan nomor Virtual Account lalu masukkan jumlah
-                            pembayaran
-                          </li>
-                          <li>
-                            Pastikan data transaksi sudah benar kemudian pilih
-                            “Ya“
-                          </li>
-                          <li>Masukkan password untuk verifikasi</li>
-                        </ul>
-                      </Tab>
-                      <Tab
-                        eventKey="Internet Banking BNI"
-                        title="Internet Banking BNI"
-                      >
-                        <ul>
-                          <li>
-                            Masuk ke https://ibank.bni.co.id, masukkan User ID
-                            dan Password
-                          </li>
-                          <li>
-                            Pilih menu “Transfer“, lalu pilih “Tambah Rekening
-                            Favorit“. Jika menggunakan Desktop. tambah rekening
-                            pada menu “Transaksi” kemudian “Atur Rekening
-                            Tujuan” lalu pilih “Tambah Rekening Tujuan”
-                          </li>
-                          <li>Masukkan nomor Virtual Account</li>
-                          <li>
-                            Masukkan Kode Otentikasi dan Nomor Rekening berhasil
-                            ditambahkan
-                          </li>
-                          <li>
-                            Pilih menu “Transfer“, lalu pilih “Transfer Antar
-                            Rekening BNI“, pilih “Rekening Tujuan”
-                          </li>
-                          <li>
-                            Pilih Rekening Debit, masukkan jumlah pembayaran
-                            sesuai tagihan
-                          </li>
-                          <li>Masukkan Kode Otentikasi</li>
-                        </ul>
-                      </Tab>
-                    </Tabs>
-
-                    <Tabs defaultActiveKey="ATM Mandiri" justify>
-                      <Tab eventKey="ATM Mandiri" title="ATM Mandiri">
-                        <ul>
-                          <li>Masukkan PIN ATM kamu</li>
-                          <li>
-                            Pada menu utama, pilih menu “Bayar/Beli” lalu pilih
-                            menu “Multi Payment” (Jika di layar belum tersedia,
-                            tekan menu “Lainnya” dan pilih “Multi Payment“)
-                          </li>
-                          <li>
-                            Masukkan nomor 88871 pada kode perusahaan kemudian
-                            tekan tombol “Benar“
-                          </li>
-                          <li>
-                            Masukkan kode pembayaran (kode pembayaran Mandiri
-                            billpayment kamu)
-                          </li>
-                          <li>
-                            Periksa kembali data transaksimu dan selesaikan
-                            proses pembayaran
-                          </li>
-                        </ul>
-                      </Tab>
-                      <Tab
-                        eventKey="Mandiri Internet Banking"
-                        title="Mandiri Internet Banking"
-                      >
-                        <ul>
-                          <li>
-                            Lakukan Login ke Internet Banking Mandiri kamu
-                          </li>
-                          <li>
-                            Pada menu utama, pilih menu “Bayar” lalu pilih menu
-                            “Multi Payment“
-                          </li>
-                          <li>
-                            Pilih akun kamu di bagian Dari Rekening, kemudian di
-                            Penyedia Jasa pilih “Blibli.com“
-                          </li>
-                          <li>
-                            Masukkan kode pembayaran (kode pembayaran Mandiri
-                            billpayment kamu), dan klik “Lanjutkan“
-                          </li>
-                          <li>
-                            Periksa kembali nama perusahaan, nomor pesanan, dan
-                            jumlah pembayaran kamu
-                          </li>
-                          <li>
-                            Selesaikan pembayaran dengan menggunakan Token
-                            Mandiri
-                          </li>
-                        </ul>
-                      </Tab>
-                      <Tab eventKey="Mandiri Online" title="Mandiri Online">
-                        <ul>
-                          <li>Lakukan Login ke Mandiri Online kamu</li>
-                          <li>Pada menu utama, pilih menu “Bayar“</li>
-                          <li>Lalu pilih menu “Multi Payment“</li>
-                          <li>Pilih Penyedia Jasa “Blibli.com“</li>
-                          <li>
-                            Masukkan kode pembayaran [Kode pembayaran Mandiri
-                            billpayment], dan klik “Lanjutkan“
-                          </li>
-                          <li>
-                            Periksa kembali data transaksi kamu dan selesaikan
-                            proses pembayaran
-                          </li>
-                        </ul>
+                      <Tab eventKey="Mandiri" title="Mandiri">
+                        <Tabs className={`active ${style.tabsTitle}`} justify>
+                          <Tab
+                            className={style.tabsText}
+                            eventKey="ATM Mandiri"
+                            title="ATM Mandiri"
+                          >
+                            <ul>
+                              <li>Masukkan PIN ATM kamu</li>
+                              <li>
+                                Pada menu utama, pilih menu “Bayar/Beli” lalu
+                                pilih menu “Multi Payment” (Jika di layar belum
+                                tersedia, tekan menu “Lainnya” dan pilih “Multi
+                                Payment“)
+                              </li>
+                              <li>
+                                Masukkan nomor 88871 pada kode perusahaan
+                                kemudian tekan tombol “Benar“
+                              </li>
+                              <li>
+                                Masukkan kode pembayaran (kode pembayaran
+                                Mandiri billpayment kamu)
+                              </li>
+                              <li>
+                                Periksa kembali data transaksimu dan selesaikan
+                                proses pembayaran
+                              </li>
+                            </ul>
+                          </Tab>
+                          <Tab
+                            className={style.tabsText}
+                            eventKey="Mandiri Internet Banking"
+                            title="Mandiri Internet Banking"
+                          >
+                            <ul>
+                              <li>
+                                Lakukan Login ke Internet Banking Mandiri kamu
+                              </li>
+                              <li>
+                                Pada menu utama, pilih menu “Bayar” lalu pilih
+                                menu “Multi Payment“
+                              </li>
+                              <li>
+                                Pilih akun kamu di bagian Dari Rekening,
+                                kemudian di Penyedia Jasa pilih “Blibli.com“
+                              </li>
+                              <li>
+                                Masukkan kode pembayaran (kode pembayaran
+                                Mandiri billpayment kamu), dan klik “Lanjutkan“
+                              </li>
+                              <li>
+                                Periksa kembali nama perusahaan, nomor pesanan,
+                                dan jumlah pembayaran kamu
+                              </li>
+                              <li>
+                                Selesaikan pembayaran dengan menggunakan Token
+                                Mandiri
+                              </li>
+                            </ul>
+                          </Tab>
+                          <Tab
+                            className={style.tabsText}
+                            eventKey="Mandiri Online"
+                            title="Mandiri Online"
+                          >
+                            <ul>
+                              <li>Lakukan Login ke Mandiri Online kamu</li>
+                              <li>Pada menu utama, pilih menu “Bayar“</li>
+                              <li>Lalu pilih menu “Multi Payment“</li>
+                              <li>Pilih Penyedia Jasa “Blibli.com“</li>
+                              <li>
+                                Masukkan kode pembayaran [Kode pembayaran
+                                Mandiri billpayment], dan klik “Lanjutkan“
+                              </li>
+                              <li>
+                                Periksa kembali data transaksi kamu dan
+                                selesaikan proses pembayaran
+                              </li>
+                            </ul>
+                          </Tab>
+                        </Tabs>
                       </Tab>
                     </Tabs>
                   </Col>
