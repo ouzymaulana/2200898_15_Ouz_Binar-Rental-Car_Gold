@@ -16,7 +16,11 @@ const CarsCard = ({ carData }) => {
       <Card.Body className={style.cardBody}>
         <Card.Text>{carData.name}</Card.Text>
         <Card.Title className={style.cardTitle}>
-          Rp {carData.price} / hari
+          {new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+          }).format(carData.price)}{" "}
+          / hari
         </Card.Title>
         <Card.Text>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
