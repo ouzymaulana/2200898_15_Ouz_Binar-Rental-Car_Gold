@@ -5,7 +5,7 @@ import SearchForm from "../Components/SearchCars/SearchForm";
 const SearchCars = () => {
   return (
     <>
-      <Header />
+      <Header showImage={true} />
       <SearchForm />
       <Footer />
     </>

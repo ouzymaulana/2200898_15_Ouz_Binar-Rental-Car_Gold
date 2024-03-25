@@ -6,7 +6,7 @@ import CarDetail from "../Components/SearchCars/CarDetail";
 const DetailCar = () => {
   return (
     <>
-      <Header />
+      <Header showImage={false} />
       <SearchForm />
       <CarDetail />
       <Footer />

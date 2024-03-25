@@ -3,7 +3,7 @@ import car from "./../assets/img/img_car.png";
 import style from "./../style/Header.module.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
-const Header = () => {
+const Header = ({ showImage }) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   return (
@@ -63,30 +63,35 @@ const Header = () => {
           </Offcanvas.Body>
         </Navbar.Offcanvas>
       </Navbar>
+
       <div className={`${style.heroSection} flex-wrap`}>
-        <Col className={`${style.titleHeroSection} fw-bold`}>
-          <h1 className="fw-bold lh-base">
-            Sewa & Rental Mobil Terbaik di kawasan (Lokasimu)
-          </h1>
-          <p>
-            Selamat datang di Binar Car Rental. Kami menyediakan mobil kualitas
-            terbaik dengan harga terjangkau. Selalu siap melayani kebutuhanmu
-            untuk sewa mobil selama 24 jam.
-          </p>
-          {pathname !== "/search-cars" && (
-            <Link to={`/search-cars`}>
-              <Button
-                className={`${style.borrow} fw-bold btn text-white border-0`}
-                as="button"
-              >
-                Mulai Sewa Mobil
-              </Button>
-            </Link>
-          )}
-        </Col>
-        <Col className={style.carImage}>
-          <img src={car} alt="car" />
-        </Col>
+        {showImage && (
+          <Col className={`${style.titleHeroSection} fw-bold`}>
+            <h1 className="fw-bold lh-base">
+              Sewa & Rental Mobil Terbaik di kawasan (Lokasimu)
+            </h1>
+            <p>
+              Selamat datang di Binar Car Rental. Kami menyediakan mobil
+              kualitas terbaik dengan harga terjangkau. Selalu siap melayani
+              kebutuhanmu untuk sewa mobil selama 24 jam.
+            </p>
+            {pathname !== "/search-cars" && (
+              <Link to={`/search-cars`}>
+                <Button
+                  className={`${style.borrow} fw-bold btn text-white border-0`}
+                  as="button"
+                >
+                  Mulai Sewa Mobil
+                </Button>
+              </Link>
+            )}
+          </Col>
+        )}
+        {showImage && (
+          <Col className={style.carImage}>
+            <img src={car} alt="car" />
+          </Col>
+        )}
       </div>
     </>
   );
