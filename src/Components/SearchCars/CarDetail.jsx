@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Button, Card, Col } from "react-bootstrap";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import "../../style/react-datepicker-style.css";
 import { BsPeople } from "react-icons/bs";
 import { useParams, useNavigate } from "react-router-dom";
 import carImage from "../../assets/img/car-in-card.jpg";
@@ -11,6 +11,7 @@ import style from "../../style/carDetail.module.css";
 const CarDetail = () => {
   const navigate = useNavigate();
   const [carItem, setCarItem] = useState([]);
+
   const { id } = useParams();
 
   const getDetailCar = async () => {
@@ -38,7 +39,6 @@ const CarDetail = () => {
   const redirectPage = () => {
     const currentUrl = window.location.href;
     localStorage.setItem("savedUrl", currentUrl);
-    console.log("Current URL saved to localStorage:", currentUrl);
     if (!localStorage.getItem("token")) {
       navigate("/sign-in");
     } else {
