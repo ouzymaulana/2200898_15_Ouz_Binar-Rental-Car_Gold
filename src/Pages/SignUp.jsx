@@ -14,9 +14,6 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
-  // const [passwordValidation, setPasswordValidation] = useState(false);
-  // const [hasSubmitted, setHasSubmitted] = useState(false);
   const baseURL =
     "https://api-car-rental.binaracademy.org/customer/auth/register";
   const navigate = useNavigate();
@@ -36,9 +33,11 @@ export default function SignUp() {
   const onChangePassword = (e) => {
     const value = e.target.value;
     setPassword(value);
-    // setPasswordValidation(value.length >= 6);
-    // setHasSubmitted(false);
     setError("");
+
+    if (value.length >= 6) {
+      setError("");
+    }
   };
 
   const handleClose = () => {
@@ -48,12 +47,10 @@ export default function SignUp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // setHasSubmitted(true); // Set submitted flag
-
-    // if (!validatePassword(password)) {
-    //   setError("Password must be at least 6 characters long.");
-    //   return;
-    // }
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters long.");
+      return;
+    }
 
     try {
       const data = {
@@ -65,11 +62,10 @@ export default function SignUp() {
       const result = await axios.post(baseURL, data);
       if (result.status === 201) {
         navigate(`/sign-in`);
-        setSuccess("sign up success", success);
       }
     } catch (error) {
       console.log(error.response);
-      setError("error signing up", error);
+      setError("Error Signing Up", error);
     }
   };
 
@@ -90,16 +86,13 @@ export default function SignUp() {
 
           <div>
             {error && (
-              <Alert className={style.alertError} variant="danger">
+              <Alert
+                className={style.alert}
+                variant="danger"
+                dismissible
+                onClose={() => setError("")}
+              >
                 <p>{error}</p>
-              </Alert>
-            )}
-          </div>
-
-          <div>
-            {error && (
-              <Alert className={style.alertSuccess} variant="success">
-                <p>{success}</p>
               </Alert>
             )}
           </div>
@@ -135,17 +128,7 @@ export default function SignUp() {
                 onChange={onChangePassword}
                 value={password}
                 required
-                // style={{
-                //   border: passwordValidation
-                //     ? "1px solid #ced4da"
-                //     : "2px solid red",
-                // }}
               />
-              {/* {!passwordValidation && (
-                <p style={{ color: "red" }}>
-                  Password must be at least 6 characters long.
-                </p>
-              )} */}
             </Form.Group>
             <Form.Group
               className="mb-3"
