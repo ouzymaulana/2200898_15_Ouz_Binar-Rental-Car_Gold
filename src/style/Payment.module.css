@@ -111,8 +111,8 @@
 }
 
 .tabsTitle {
-  color: black !important;
-  margin-bottom: 16px !important;
+  color: #000 !important;
+  margin-bottom: 16px;
   font-size: 14px;
   line-height: 20px;
   align-items: center;

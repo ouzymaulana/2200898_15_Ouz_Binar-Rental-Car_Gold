@@ -7,8 +7,8 @@ import moment from "moment";
 import copy from "copy-to-clipboard";
 import iconCheck from "./../assets/icon/fi_check.png";
 import iconCopy from "./../assets/icon/fi_copy.png";
-// import { useDispatch, useSelector } from "react-redux";
-// import { pagesUpdate } from "../redux/action/pages";
+import { useDispatch, useSelector } from "react-redux";
+import { pagesUpdate } from "../redux/action/pages";
 
 // eslint-disable-next-line react/prop-types
 const Timer = ({ duration }) => {
@@ -34,32 +34,32 @@ const Timer = ({ duration }) => {
   return <div>{GetFormattedTime(time)}</div>;
 };
 
-// const PAGES_LIST = [
-//   {
-//     pageNumber: 1,
-//     text: "Bayar",
-//   },
-//   {
-//     pageNumber: 2,
-//     text: "Upload",
-//   },
-//   {
-//     pageNumber: 3,
-//     text: "Konfirmasi",
-//   },
-// ];
-
-// const Page = ({ pageNumber, text }) => {
-//   const dispatch = useDispatch();
-//   const page = useSelector((state) => state.pages.page);
-//   const handleClick = () => {
-//     dispatch(pagesUpdate(pageNumber));
-//   };
-//   return;
-// };
+const PAGES_LIST = [
+  {
+    pageNumber: 1,
+    text: "Bayar",
+  },
+  {
+    pageNumber: 2,
+    text: "Upload",
+  },
+  {
+    pageNumber: 3,
+    text: "Konfirmasi",
+  },
+];
 
 const Payment = () => {
-  // const page = useSelector((state) => state.pages.page);
+  const Page = ({ pageNumber, text }) => {
+    const dispatch = useDispatch();
+    const page = useSelector((state) => state.pages.page);
+    const handleClick = () => {
+      dispatch(pagesUpdate(pageNumber));
+    };
+    return;
+  };
+
+  const page = useSelector((state) => state.pages.page);
   const [carItem, setCarItem] = useState([]);
   const [, setDataCar] = useState([]);
   const { id } = useParams();
@@ -104,7 +104,6 @@ const Payment = () => {
   const [active, setActive] = useState([]);
   const [selectBank, setSelectBank] = useState("");
   localStorage.setItem("selectBank", active);
-  const totalPrice = carItem.price * rangeDate;
 
   const handleButton = (buttonPayment) => {
     setActive(active === buttonPayment ? "" : buttonPayment);
@@ -159,6 +158,17 @@ const Payment = () => {
       console.error(error);
     }
   };
+
+  const formatPrice = new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+  }).format(carItem.price);
+
+  const totalPrice = new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+  }).format(carItem.price * rangeDate);
+  console.log(totalPrice);
 
   return (
     <>
@@ -275,12 +285,7 @@ const Payment = () => {
                 style={{ marginBottom: "18px" }}
               >
                 <Card.Text className={style.cardsList}>Total</Card.Text>
-                <Card.Text className={style.cardsTitle}>
-                  {new Intl.NumberFormat("id-ID", {
-                    style: "currency",
-                    currency: "IDR",
-                  }).format(carItem.price * rangeDate)}
-                </Card.Text>
+                <Card.Text className={style.cardsTitle}>{totalPrice}</Card.Text>
               </Col>
 
               <Col>
@@ -290,19 +295,9 @@ const Payment = () => {
                   style={{ marginBottom: "8px" }}
                 >
                   <li>
-                    Sewa Mobil{" "}
-                    {new Intl.NumberFormat("id-ID", {
-                      style: "currency",
-                      currency: "IDR",
-                    }).format(carItem.price)}{" "}
-                    x {rangeDate} Hari
+                    Sewa Mobil {formatPrice} x {rangeDate} Hari
                   </li>
-                  <div>
-                    {new Intl.NumberFormat("id-ID", {
-                      style: "currency",
-                      currency: "IDR",
-                    }).format(carItem.price * rangeDate)}
-                  </div>
+                  <div>{totalPrice}</div>
                 </div>
               </Col>
 
@@ -334,23 +329,17 @@ const Payment = () => {
                 className={`${style.cardsTitle} d-flex flex-row justify-content-between`}
               >
                 <Card.Text>Total</Card.Text>
-                <Card.Text>
-                  {new Intl.NumberFormat("id-ID", {
-                    style: "currency",
-                    currency: "IDR",
-                  }).format(carItem.price * rangeDate)}
-                </Card.Text>
+                <Card.Text>{totalPrice}</Card.Text>
               </Col>
               <Button
                 disabled={
                   active !== "BCA" && active !== "BNI" && active !== "Mandiri"
                 }
                 className={`${style.cardsButton} w-100`}
-                onClick={postDetailCar}
-                // onClick={() => {
-                //   handleClick(pageNumber);
-                //   console.log(pageNumber);
-                // }}
+                // onClick={postDetailCar}
+                onClick={() => {
+                  handleClick(pageNumber);
+                }}
               >
                 Bayar
               </Button>
@@ -470,6 +459,7 @@ const Payment = () => {
                           fontSize: "12px",
                           lineHeight: "18px",
                         }}
+                        defaultValue={isNaN(carItem.price) ? "" : totalPrice}
                         type="text"
                         ref={textRef2}
                       />
@@ -512,12 +502,12 @@ const Payment = () => {
                 >
                   <Col style={{ display: "flex", flexDirection: "column" }}>
                     <Tabs
-                      className={`active ${style.tabsTitle}`}
+                      className={style.tabsTitle}
                       activeKey={selectBank}
                       justify
                     >
                       <Tab eventKey="BCA" title="BCA">
-                        <Tabs className={`active ${style.tabsTitle}`} justify>
+                        <Tabs className={style.tabsTitle} justify>
                           <Tab
                             className={style.tabsText}
                             eventKey="ATM BCA"
@@ -596,7 +586,7 @@ const Payment = () => {
                       </Tab>
 
                       <Tab eventKey="BNI" title="BNI">
-                        <Tabs className={`active ${style.tabsTitle}`} justify>
+                        <Tabs className={style.tabsTitle} justify>
                           <Tab
                             className={style.tabsText}
                             eventKey="ATM BNI"
@@ -680,7 +670,7 @@ const Payment = () => {
                       </Tab>
 
                       <Tab eventKey="Mandiri" title="Mandiri">
-                        <Tabs className={`active ${style.tabsTitle}`} justify>
+                        <Tabs className={style.tabsTitle} justify>
                           <Tab
                             className={style.tabsText}
                             eventKey="ATM Mandiri"
@@ -767,6 +757,25 @@ const Payment = () => {
               </Col>
             </Card.Body>
           </Col>
+
+          <Card.Body
+            className={style.cardsContainer}
+            style={{
+              marginRight: "199px",
+              width: "405px",
+              height: "148px",
+            }}
+          >
+            <div
+              className={style.cardsPayment}
+              style={{ marginBottom: "44px" }}
+            >
+              Klik konfirmasi pembayaran untuk mempercepat proses pengecekan
+            </div>
+            <Button className={`${style.cardsButton} w-100`}>
+              Konfirmasi Pembayaran
+            </Button>
+          </Card.Body>
 
           <Card.Body
             className={style.cardsContainer}
